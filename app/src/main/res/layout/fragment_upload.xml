@@ -1,14 +1,150 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="buaa.icourse.UploadFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/upload_fragment"
+    <!--主图标-->
+    <ImageView
+        android:id="@+id/upload_icon"
+        android:src="@drawable/main_icon"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/upload_major"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/upload_icon"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <!--系号-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/major"
+            android:textAppearance="@*android:style/TextAppearance.Holo.Light.Medium"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/major_number"
+            android:layout_width="0dp"
+            android:hint="@string/major_number"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:layout_weight="2"
+            android:ems="10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/upload_course"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/upload_major"
+        android:orientation="horizontal">
+
+        <!--系号-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/course_name"
+            android:textAppearance="@*android:style/TextAppearance.Holo.Light.Medium"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/course_name"
+            android:layout_width="0dp"
+            android:hint="@string/plz_input_course_name"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:ems="10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/upload_description"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/upload_course"
+        android:orientation="horizontal">
+
+        <!--系号-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="描述"
+            android:textAppearance="@*android:style/TextAppearance.Holo.Light.Medium"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="0dp"
+            android:hint="@string/plz_input_res_dscrp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:ems="10" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/upload_file"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/upload_description"
+        android:orientation="horizontal">
+
+        <!--系号-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="文件名"
+            android:textAppearance="@*android:style/TextAppearance.Holo.Light.Medium"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/filename"
+            android:layout_width="0dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:ems="10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/upload_file"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/upload_browse"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/darker_gray"
+            android:text="浏览"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/upload_upload"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="上传"
+            android:textAllCaps="false" />
+    </LinearLayout>
+</RelativeLayout>

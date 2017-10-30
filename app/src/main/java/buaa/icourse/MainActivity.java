@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(HomeFragment.newInstance("Home"));
         adapter.addFragment(CategoryFragment.newInstance(new Bundle()));
         adapter.addFragment(SearchFragment.newInstance(new Bundle()));
-        adapter.addFragment(UploadFragment.newInstance(new Bundle()));
+        adapter.addFragment(UploadFragment.newInstance("Upload"));
         adapter.addFragment(UserFragment.newInstance("User"));
         viewPager.setAdapter(adapter);
     }
