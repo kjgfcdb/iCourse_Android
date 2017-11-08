@@ -12,11 +12,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +28,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UploadFragment extends Fragment {
-    private TextView fileNameTextView; // 文件名
-    private Button uploadBrowse; // 浏览文件按钮
-    private Button uploadUpload; // 上传文件按钮
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
-    private String path;
+public class UploadFragment extends Fragment {
+    private static final int SUCCESS = 2;//状态识别码
+    private static final int FAILD = 3;
+    private String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
+    private TextView fileNameTextView; // 文件名
+
+    private String path;//本地文件路径
     private Uri globalUri;
 
     public UploadFragment() {
@@ -40,8 +49,8 @@ public class UploadFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upload, container, false);
         fileNameTextView = view.findViewById(R.id.filename);
-        uploadBrowse = view.findViewById(R.id.upload_browse);
-        uploadUpload = view.findViewById(R.id.upload_upload);
+        Button uploadBrowse = view.findViewById(R.id.upload_browse);
+        Button uploadUpload = view.findViewById(R.id.upload_upload);
 
         uploadBrowse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,11 +58,58 @@ public class UploadFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 
                 intent.setType("*/*");//无类型限制
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);//调用系统资源管理器帮助我们选择文件
                 startActivityForResult(intent, 1);
             }
         });
+
+        uploadUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadFile();
+            }
+        });
         return view;
+    }
+    private Handler mHandler = new Handler(new Handler.Callback() {
+
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case SUCCESS:
+                    path = "";
+                    fileNameTextView.setText(path);
+                    Toast.makeText(getContext(), "上传成功！", Toast.LENGTH_LONG).show();
+                    break;
+                case FAILD:
+                    Toast.makeText(getContext(), "上传失败！", Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+
+    });
+    private void uploadFile() {
+        new Thread() {
+            @Override
+            public void run() {
+                Message msg = Message.obtain();
+                // 服务器的访问路径
+                Map<String, File> files = new HashMap<String, File>();
+
+                String name = path.substring(path.lastIndexOf("/")+1,path.length());
+                files.put(name, new File(path));
+                try {
+                    HttpUtil.postFile(uploadUrl, new HashMap<String, String>(), files);
+                    msg.what = SUCCESS;
+                } catch (Exception e) {
+                    msg.what = FAILD;
+                }
+                mHandler.sendMessage(msg);
+            }
+        }.start();
     }
 
     public static UploadFragment newInstance(String message) {
@@ -71,7 +127,7 @@ public class UploadFragment extends Fragment {
                     path = uri.getPath();
                     fileNameTextView.setText(path);
                 } else {
-                    //以下方法仅支持android 4.4+
+                    //尝试获取读权限
                     int permission = ContextCompat.checkSelfPermission(getContext(),
                             Manifest.permission.READ_EXTERNAL_STORAGE);
                     if (permission != PackageManager.PERMISSION_GRANTED) {
@@ -91,8 +147,8 @@ public class UploadFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions,
-                                           int[] grantResults) {
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (requestCode == 1) {
             if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 //在此处做文件枚举
