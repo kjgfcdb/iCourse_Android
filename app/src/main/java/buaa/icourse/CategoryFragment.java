@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class CategoryFragment extends Fragment {
-    private String message;
-
+    /**
+     * 种类页面,支持按照资源种类进行资源检索
+     */
     public CategoryFragment() {
     }
 
@@ -27,10 +28,10 @@ public class CategoryFragment extends Fragment {
         mTextView.setText(bundle == null ? "Category" : bundle.getString("message"));
     }
 
-    public static HomeFragment newInstance(Bundle args) {
-        HomeFragment homeFragment = new HomeFragment();
-        homeFragment.setArguments(args);
-        return homeFragment;
+    public static CategoryFragment newInstance(Bundle args) {
+        CategoryFragment categoryFragment = new CategoryFragment();
+        categoryFragment.setArguments(args);
+        return categoryFragment;
     }
 
 

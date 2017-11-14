@@ -6,7 +6,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.Window;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,13 +43,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.disableShiftMode(navigation);
-        //viewPager stores fragments
+        //ViewPager存放的是碎片
         viewPager = findViewById(R.id.fragment_container);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -76,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(HomeFragment.newInstance("Home"));
+        adapter.addFragment(HomeFragment.newInstance());
         adapter.addFragment(CategoryFragment.newInstance(new Bundle()));
         adapter.addFragment(SearchFragment.newInstance(new Bundle()));
-        adapter.addFragment(UploadFragment.newInstance("Upload"));
-        adapter.addFragment(UserFragment.newInstance("User"));
+        adapter.addFragment(UploadFragment.newInstance());
+        adapter.addFragment(UserFragment.newInstance());
         viewPager.setAdapter(adapter);
     }
 }

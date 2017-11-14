@@ -30,10 +30,10 @@ public class LoginActivity extends AppCompatActivity {
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         //从"remember_password"中取值，默认值为false(第二个参数)，如果不存在该键那么就取默认值
-        boolean isRemember = pref.getBoolean("remember_password",false);
+        boolean isRemember = pref.getBoolean("remember_password", false);
         if (isRemember) {
-            String oldSid = pref.getString("sid","");
-            String oldPassword = pref.getString("password","");
+            String oldSid = pref.getString("sid", "");
+            String oldPassword = pref.getString("password", "");
             sid.setText(oldSid);
             password.setText(oldPassword);
             checkBox.setChecked(true);
@@ -44,10 +44,16 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent registerIntent = new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
             }
         });
+        //如果用户成功登录,那么下次点开则不必再出现登录界面了
+        if (pref.getBoolean("online",false)) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         //开启登录
         login.setOnClickListener(new View.OnClickListener() {
@@ -58,19 +64,20 @@ public class LoginActivity extends AppCompatActivity {
                 if (Sid.equals("14051131") && Password.equals("123456")) {
                     editor = pref.edit();
                     if (checkBox.isChecked()) {
-                        editor.putBoolean("remember_password",true);
-                        editor.putString("sid",Sid);
-                        editor.putString("password",Password);
+                        editor.putBoolean("remember_password", true);
+                        editor.putString("sid", Sid);
+                        editor.putString("password", Password);
+                        editor.putBoolean("online",true);
                     } else {
                         editor.clear();
                     }
                     editor.apply();
                     //启动主活动
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this,"Wrong password",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
                 }
             }
         });

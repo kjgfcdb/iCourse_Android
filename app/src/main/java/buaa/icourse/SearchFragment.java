@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class SearchFragment extends Fragment {
-    private String message;
-
-    public SearchFragment() {
-    }
+    /**
+     * 搜索页面，提供资源检索
+     */
+    public SearchFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,10 +27,10 @@ public class SearchFragment extends Fragment {
         mTextView.setText(bundle == null ? "Search" : bundle.getString("message"));
     }
 
-    public static HomeFragment newInstance(Bundle args) {
-        HomeFragment homeFragment = new HomeFragment();
-        homeFragment.setArguments(args);
-        return homeFragment;
+    public static SearchFragment newInstance(Bundle args) {
+        SearchFragment searchFragment = new SearchFragment();
+        searchFragment.setArguments(args);
+        return searchFragment;
     }
 
 
