@@ -13,8 +13,7 @@ import java.lang.reflect.Field;
 class BottomNavigationViewHelper {
 
     @SuppressLint("RestrictedApi")
-    public static void disableShiftMode(BottomNavigationView navigationView) {
-
+    static void disableShiftMode(BottomNavigationView navigationView) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigationView.getChildAt(0);
         try {
             Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
@@ -24,7 +23,7 @@ class BottomNavigationViewHelper {
 
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
-                itemView.setShiftingMode(false);
+                itemView.setShiftingMode(false);//禁用滑动效果
                 itemView.setChecked(itemView.getItemData().isChecked());
             }
         } catch (NoSuchFieldException e) {

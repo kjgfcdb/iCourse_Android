@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class CategoryFragment extends Fragment {
     /**
      * 种类页面,支持按照资源种类进行资源检索
+     * TODO:界面设计
      */
     public CategoryFragment() {
     }
@@ -28,9 +29,8 @@ public class CategoryFragment extends Fragment {
         mTextView.setText(bundle == null ? "Category" : bundle.getString("message"));
     }
 
-    public static CategoryFragment newInstance(Bundle args) {
+    public static CategoryFragment newInstance() {
         CategoryFragment categoryFragment = new CategoryFragment();
-        categoryFragment.setArguments(args);
         return categoryFragment;
     }
 

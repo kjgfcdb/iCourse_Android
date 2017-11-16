@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 
 public class ResourceDetail extends AppCompatActivity {
     /**
@@ -36,7 +35,7 @@ public class ResourceDetail extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         collapsingToolbar.setTitle(resourceName);
-        Glide.with(this).load(R.drawable.main_icon).into(resourceImage);
+        resourceImage.setImageResource(R.drawable.vector_drawable_file_doc);
         String detailText = generateDetailText();
         resourceDetailText.setText(detailText);
     }

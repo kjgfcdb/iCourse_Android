@@ -11,8 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class UserFragment extends Fragment {
+    /**
+     * 用户界面，用于显示用户信息
+     * TODO:完成界面
+     */
+
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
+
     public UserFragment() {
     }
 
@@ -26,9 +32,9 @@ public class UserFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putBoolean("online",false);
+                editor.putBoolean("online", false);
                 editor.apply();
-                Intent intent = new Intent(getContext(),LoginActivity.class);
+                Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }

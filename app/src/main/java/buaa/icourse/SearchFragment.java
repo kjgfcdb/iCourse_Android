@@ -27,9 +27,8 @@ public class SearchFragment extends Fragment {
         mTextView.setText(bundle == null ? "Search" : bundle.getString("message"));
     }
 
-    public static SearchFragment newInstance(Bundle args) {
+    public static SearchFragment newInstance() {
         SearchFragment searchFragment = new SearchFragment();
-        searchFragment.setArguments(args);
         return searchFragment;
     }
 
