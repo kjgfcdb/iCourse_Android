@@ -23,8 +23,6 @@ public class SearchFragment extends Fragment {
 
     private void initArgs(View view) {
         Bundle bundle = getArguments();
-        TextView mTextView = view.findViewById(R.id.search_fragment);
-        mTextView.setText(bundle == null ? "Search" : bundle.getString("message"));
     }
 
     public static SearchFragment newInstance() {
