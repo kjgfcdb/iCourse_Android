@@ -16,7 +16,7 @@ public class ResourceDetail extends AppCompatActivity {
      * 详情展示页,用于展示资源的详细信息
      */
     public static final String RESOURCE_NAME = "resource_name";
-    public static final String RESOURCE_ID = "resource_id";
+    public static final String RESOURCE_TYPE = "resource_type";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class ResourceDetail extends AppCompatActivity {
         setContentView(R.layout.resource_detail);
         Intent intent = getIntent();
         String resourceName = intent.getStringExtra(RESOURCE_NAME);
-        int resourceId = intent.getIntExtra(RESOURCE_ID,0);
+        String resourceType = intent.getStringExtra(RESOURCE_TYPE);
         Toolbar toolbar = findViewById(R.id.resource_detail_toolbar);
         CollapsingToolbarLayout collapsingToolbar= findViewById(R.id.collapsing_toolbar);
         ImageView resourceImage = findViewById(R.id.resource_detail_image);
@@ -35,7 +35,7 @@ public class ResourceDetail extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         collapsingToolbar.setTitle(resourceName);
-        resourceImage.setImageResource(R.drawable.vector_drawable_file_doc);
+        resourceImage.setImageResource((int)MainActivity.pictures.get(resourceType));
         String detailText = generateDetailText();
         resourceDetailText.setText(detailText);
     }

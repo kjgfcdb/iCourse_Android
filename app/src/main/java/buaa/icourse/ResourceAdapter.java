@@ -12,7 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -30,7 +32,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
             super(view);
             layout = (LinearLayout) view;
             resourceImage = view.findViewById(R.id.resource_image);
-            resourceName = view.findViewById(R.id.resource_name);
+            resourceName = view.findViewById(R.id.resource_item_name);
         }
     }
 
@@ -53,7 +55,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
                 ResourceItem item = mResourceList.get(position);
                 Intent intent = new Intent(mContext, ResourceDetail.class);
                 intent.putExtra(ResourceDetail.RESOURCE_NAME, item.getResourceName());
-                intent.putExtra(ResourceDetail.RESOURCE_ID, item.getResourceId());
+                intent.putExtra(ResourceDetail.RESOURCE_TYPE, item.getResourceType());
                 mContext.startActivity(intent);
             }
         });
@@ -64,14 +66,8 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         ResourceItem resourceItem = mResourceList.get(position);
         holder.resourceName.setText(resourceItem.getResourceName());
-        int [] pictures = {R.drawable.vector_drawable_file_zip,
-                R.drawable.vector_drawable_file_doc,
-                R.drawable.vector_drawable_file,
-                R.drawable.vector_drawable_pdf,
-                R.drawable.vector_drawable_file_ppt,
-                R.drawable.vector_drawable_file_xls
-        };
-        holder.resourceImage.setImageResource(pictures[new Random().nextInt(pictures.length)]);
+
+        holder.resourceImage.setImageResource((int)MainActivity.pictures.get(resourceItem.getResourceType()));
     }
 
     @Override

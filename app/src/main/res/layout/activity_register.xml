@@ -137,29 +137,6 @@
             </RadioGroup>
         </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="50.0dip"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="系号:"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:inputType="number"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-
     </LinearLayout>
 
     <ViewSwitcher

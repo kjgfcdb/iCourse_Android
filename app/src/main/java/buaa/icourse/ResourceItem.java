@@ -4,18 +4,18 @@ package buaa.icourse;
 class ResourceItem {
     //资源单项
     private String resourceName;
-    private int resouceId;
+    private String resourceType;
 
-    ResourceItem(String resourceName, int resouceId) {
+    ResourceItem(String resourceName, String resourceType) {
         this.resourceName = resourceName;
-        this.resouceId = resouceId;
+        this.resourceType = resourceType;
     }
 
     String getResourceName() {
         return this.resourceName;
     }
 
-    int getResourceId() {
-        return this.resouceId;
+    String getResourceType() {
+        return this.resourceType;
     }
 }

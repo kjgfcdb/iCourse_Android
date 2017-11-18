@@ -1,6 +1,9 @@
 package buaa.icourse;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.annotation.AnimatorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
@@ -8,11 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private MenuItem menuItem;
     private BottomNavigationView navigation;
+    static Map pictures = new HashMap();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -40,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    static void initPictures() {
+        pictures.put("doc",R.drawable.vector_drawable_file_doc);
+        pictures.put("pdf",R.drawable.vector_drawable_pdf);
+        pictures.put("xls",R.drawable.vector_drawable_file_xls);
+        pictures.put("ppt",R.drawable.vector_drawable_file_ppt);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +60,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-
+        if (Build.VERSION.SDK_INT> 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        initPictures();
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.disableShiftMode(navigation);

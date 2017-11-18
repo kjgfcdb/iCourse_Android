@@ -1,5 +1,6 @@
 package buaa.icourse;
 
+import android.app.DownloadManager;
 import android.util.Log;
 
 import java.io.DataOutputStream;
@@ -11,6 +12,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+
+import okhttp3.FormBody;
+import okhttp3.Request;
 
 import static android.content.ContentValues.TAG;
 
@@ -91,7 +95,7 @@ class HttpUtil {
         return in.toString();
     }
 
-    public static void downloadFile(final String urlpath, final String remoteFileName,final String localFileName) {
+    static void downloadFile(final String urlpath, final String remoteFileName,final String localFileName) {
         new Thread(new Runnable() {
             @Override
             public void run() {
