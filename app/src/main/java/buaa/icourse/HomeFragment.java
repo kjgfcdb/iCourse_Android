@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,12 +61,13 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
         initResources();
 
         RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
+        final ProgressBar bar = view.findViewById(R.id.fragment_home_progress_bar);
         //网格布局,设置为1列
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(layoutManager);
         //设置资源适配器
         adapter = new ResourceAdapter(resourceItemList);
@@ -73,11 +75,31 @@ public class HomeFragment extends Fragment {
         //设置滑动刷新器
         swipeRefresh = view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        //下拉刷新
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.
                 OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshResources();
+            }
+        });
+        //上滑加载更多
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState ==RecyclerView.SCROLL_STATE_IDLE &&
+                        layoutManager.findLastVisibleItemPosition() + 1 ==adapter.getItemCount()) {
+                    bar.setVisibility(View.VISIBLE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            resourceItemList.add(new ResourceItem("New","doc"));
+                            adapter.notifyDataSetChanged();
+                            bar.setVisibility(View.INVISIBLE);
+                        }
+                    },1000);
+                }
             }
         });
         return view;
@@ -114,11 +136,6 @@ public class HomeFragment extends Fragment {
             msg.what = FAILD;
         }
         mHandler.sendMessage(msg);
-//        for (int i = 0; i < 20; i++) {
-//            Random random = new Random();
-//            int index = random.nextInt(items.length);
-//            resourceItemList.add(items[index]);
-//        }
     }
 
     public void refreshResources() {
