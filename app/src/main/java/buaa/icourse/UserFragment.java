@@ -13,7 +13,6 @@ import android.widget.Button;
 public class UserFragment extends Fragment {
     /**
      * 用户界面，用于显示用户信息
-     * TODO:完成界面
      */
 
     private SharedPreferences pref;

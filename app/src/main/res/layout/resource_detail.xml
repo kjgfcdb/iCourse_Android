@@ -89,6 +89,7 @@
                             android:textSize="20sp" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -117,6 +118,15 @@
 
             </android.support.v7.widget.CardView>
 
+            <RatingBar
+                android:id="@+id/resource_detail_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:numStars="5"
+                android:rating="3"
+                android:stepSize="1" />
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,16 +136,34 @@
                 android:layout_marginTop="0dp"
                 app:cardCornerRadius="4dp">
 
-                <Button
-                    android:id="@+id/logout"
-                    style="@style/Widget.AppCompat.Button.Borderless"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="下载"
-                    android:textAllCaps="false"
-                    android:textSize="20sp" />
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/resource_detail_uploadRating"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="上传评分"
+                        android:textAllCaps="false"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/resource_detail_download"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="下载"
+                        android:textAllCaps="false"
+                        android:textSize="20sp" />
+                </LinearLayout>
 
             </android.support.v7.widget.CardView>
         </LinearLayout>

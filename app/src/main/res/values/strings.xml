@@ -87,7 +87,6 @@
     <string name="simple_round">Simple Round</string>
     <string name="save_data">Save Data</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="major_number">请输入系号</string>
     <string name="course_name">课程名</string>
