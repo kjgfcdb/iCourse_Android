@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private MenuItem menuItem;
     private BottomNavigationView navigation;
     static Map pictures = new HashMap();
+    static Map c_pictures = new HashMap();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         pictures.put("pdf",R.drawable.vector_drawable_pdf);
         pictures.put("xls",R.drawable.vector_drawable_file_xls);
         pictures.put("ppt",R.drawable.vector_drawable_file_ppt);
+        for (int i = 1; i < 100; ++i){
+            c_pictures.put(i, R.drawable.school_logo);
+        }
     }
 
     @Override
