@@ -28,8 +28,8 @@ public class SearchFragment extends Fragment {
     /**
      * 搜索页面，提供资源检索
      */
-    private ResourceAdapter adapter;
-    private List<ResourceItem> resourceItemList = new ArrayList<>();
+    private CourseAdapter adapter;
+    private List<CourseItem> courseItemList = new ArrayList<>();
     public SearchFragment() {}
 
     @Override
@@ -44,21 +44,22 @@ public class SearchFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(layoutManager);
         //设置资源适配器
-        adapter = new ResourceAdapter(resourceItemList);
+        adapter = new CourseAdapter(courseItemList);
         recyclerView.setAdapter(adapter);
 
         Button bt = view.findViewById(R.id.query_button);
         bt.setOnClickListener(new View.OnClickListener() {
             public static final String TAG = "Search";
-            ResourceItem ri;
+            CourseItem ri;
             SolrQuery st = new SolrQuery();
             JSONArray ja;
             double score;
-            String name;
+            String name, course_code;
+            int college_id;
 
             @Override
             public void onClick(View view)  {
-                resourceItemList.clear();
+                courseItemList.clear();
                 EditText et = (EditText) getActivity().findViewById(R.id.query_content);
                 String str = et.getText().toString();
                 Log.d(TAG, "!!!!!Query: "+str);
@@ -70,8 +71,13 @@ public class SearchFragment extends Fragment {
                         //if (score < 5)
                         //    continue;
                         name = (String)courseData.get("name");
-                        ri = new ResourceItem(name, "ppt");
-                        resourceItemList.add(ri);
+                        System.out.println("%%%"+name);
+                        college_id = courseData.getInt("college_id");
+
+                        course_code = (String)courseData.get("course_code");
+                        System.out.println("???"+course_code);
+                        ri = new CourseItem(name, course_code, college_id);
+                        courseItemList.add(ri);
                         adapter.notifyDataSetChanged();
                     }
                 } catch (Exception e) {
