@@ -1,14 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="buaa.icourse.SearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--<TextView
         android:id="@+id/search_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="50dp"
+        android:text="@string/hello_blank_fragment" />-->
 
-</FrameLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</LinearLayout>
