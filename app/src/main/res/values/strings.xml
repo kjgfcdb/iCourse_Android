@@ -80,7 +80,7 @@
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
-    <string name="please_input_your_id">请输入学号</string>
+    <string name="please_input_your_id">请输入用户名</string>
     <string name="email">邮箱</string>
     <string name="password">密码</string>
     <string name="remember_password">记住密码？</string>

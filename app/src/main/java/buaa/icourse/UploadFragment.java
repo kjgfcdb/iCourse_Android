@@ -32,7 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UploadFragment extends Fragment {
-    static String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
+    //static String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
+    static String uploadUrl = "http://10.2.28.124:8080/Hello/HelloWorld";
     private static final int SUCCESS = 2;//状态识别码
     private static final int FAILD = 3;
     private TextView fileNameTextView; // 文件名

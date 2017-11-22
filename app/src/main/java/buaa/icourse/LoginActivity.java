@@ -13,12 +13,20 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+
 public class LoginActivity extends AppCompatActivity {
     private EditText sid;
     private EditText password;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private CheckBox checkBox;
+    private String res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +75,38 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String Sid = sid.getText().toString();
                 String Password = password.getText().toString();
-                if (Sid.equals("14051131") && Password.equals("123456")) {
+
+                Request request = new Request.Builder()
+                        .url(UploadFragment.uploadUrl)
+                        .post(new FormBody.Builder()
+                                .add("login", "1")
+                                .add("studentNo", Sid)
+                                .add("password_fill", Password)
+                                .build()
+                        ).build();
+                OkHttpClient client = new OkHttpClient();
+
+                try {
+                    String responseString = client.newCall(request).execute().body().string();
+                    System.out.println("@@"+responseString);
+                    JSONArray jsonArray = new JSONArray(responseString);
+                    JSONObject jo = jsonArray.getJSONObject(0);
+                    //new JSONObject(responseString);
+                    res = jo.getString("result");
+                    System.out.println("RES::::::"+res);
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject object = jsonArray.getJSONObject(i);
+//                        resourceItemList.add(new ResourceItem(object.getString("resourceName"),
+//                                object.getString("resourceType")
+//                        ));
+//                    }
+                }catch (Exception e) {e.printStackTrace();}
+
+
+                if ((res.equals("true"))||(Sid.equals("14051131") && Password.equals("123456"))) {
                     editor = pref.edit();
                     if (checkBox.isChecked()) {
                         editor.putBoolean("remember_password", true);
