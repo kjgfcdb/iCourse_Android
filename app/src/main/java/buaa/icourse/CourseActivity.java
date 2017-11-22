@@ -31,17 +31,12 @@ public class CourseActivity extends AppCompatActivity {
 
 
 
-        System.out.println("$$#@$#@#@*&($(");
 
         String courseCode = getIntent().getStringExtra("Course_code");
 
         ResourceItem ri;
-        SolrQuery st = new SolrQuery();
-        JSONArray ja;
-        double score;
         String name;
 
-        System.out.println("@@@@@@@@@@@@s");
 
         adapter = new ResourceAdapter(resourceItemList);
 
