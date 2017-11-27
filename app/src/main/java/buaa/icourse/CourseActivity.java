@@ -5,17 +5,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class CourseActivity extends AppCompatActivity {
 
+    private static final String TAG = "CourseActivity";
     private ResourceAdapter adapter;
     private List<ResourceItem> resourceItemList = new ArrayList<>();
+
+    private static String unicodeToString(String str) {
+        Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{2,4}))");
+        Matcher matcher = pattern.matcher(str);
+        char ch;
+        while (matcher.find()) {
+            //group 6728
+            String group = matcher.group(2);
+            //ch:'木' 26408
+            ch = (char) Integer.parseInt(group, 16);
+            //group1 \u6728
+            String group1 = matcher.group(1);
+            str = str.replace(group1, ch + "");
+        }
+        return str;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,67 +55,43 @@ public class CourseActivity extends AppCompatActivity {
         adapter = new ResourceAdapter(resourceItemList);
         recyclerView.setAdapter(adapter);
 
-
-
-
         String courseCode = getIntent().getStringExtra("Course_code");
-
         ResourceItem ri;
-        String name;
-
-
+        String name, passwd, resourceType, url, intro, username;
+        int siz, downloadCount;
         adapter = new ResourceAdapter(resourceItemList);
-
         try {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(UploadFragment.uploadUrl)
+                    .post(new FormBody.Builder()
+                            .add("CourseActivity", courseCode)
+                            .build()
+                    ).build();
+            Response response = client.newCall(request).execute();
+            byte[] bytes = response.body().bytes();
 
-            Init_mysql con = new Init_mysql(0);
-
-            String cypher;
-            cypher = "select count(*) from backend_resource;";
-
-            String columnName = "name";
-            JSONArray ans;
-            ans = con.executeCypher(cypher, 1);
-
-
-            int cnt;
-            cnt = ans.getJSONObject(0).getInt("count(*)");
-            System.out.println("User cnt = " + cnt);
-
-            cypher = "select * from backend_resource where course_code='"
-                    + courseCode + "';";
-
-            ans = con.executeCypher(cypher, cnt + 1);
-            con.close();
-
-            String nam, passwd;
-            int id, contribution;
-
-            int siz = ans.length();
+            String responseString = new String(bytes);
+            Log.d(TAG, "initResources: " + bytes.length);
+            Log.d(TAG, "initResources: " + responseString);
+            JSONArray jsonArray = new JSONArray(responseString);
+            siz = jsonArray.length();
             System.out.println("siz = " + siz);
-
             for (int i = 0; i < siz; i++) {
-
-                if (i > 5)
-                    break;
-
-                JSONObject job = ans.getJSONObject(i);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
-                //System.out.println(columnName+" = "+job.get(columnName));
-                name = job.getString("name");
-                id = job.getInt("id");
-                System.out.println("id:" + id + " name:" +
-                        name);
-                ri = new ResourceItem(name, "ppt","www",
-                        "hello world","wangjingyuan",10
+                JSONObject object = jsonArray.getJSONObject(i);
+                resourceType = unicodeToString(object.getString("resourceName"));
+                url = object.getString("url");
+                name = unicodeToString(object.getString("resourceName"));
+                intro = unicodeToString(object.getString("intro"));
+                username = unicodeToString(object.getString("username"));
+                downloadCount = object.getInt("downloadCount");
+                ri = new ResourceItem(name, resourceType,url,
+                        intro,username,downloadCount
                         );
                 resourceItemList.add(ri);
                 adapter.notifyDataSetChanged();
             }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        }catch (Exception e){ e.printStackTrace(); }
     }
 
 }
