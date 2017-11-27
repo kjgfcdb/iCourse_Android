@@ -21,6 +21,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -136,16 +138,11 @@ public class HomeFragment extends Fragment {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 localResourceItemQueue.add(new ResourceItem(
-//                        convertUTF8ToString(object.getString("resourceName").substring(0,
-//                                object.getString("resourceName").lastIndexOf(".")
-//                                )),
-//                        new String(object.getString("resourceName").replace("\\\\","\\").getBytes("utf-8"),"utf-8"),
-//                        unicodeToUtf8(object.getString("resourceName")),
-                        object.getString("resourceName"),
+                        unicodeToString(object.getString("resourceName")),
                         object.getString("resourceType"),
                         object.getString("url"),
-                        object.getString("intro"),
-                        object.getString("username"),
+                        unicodeToString(object.getString("intro")),
+                        unicodeToString(object.getString("username")),
                         object.getInt("downloadCount")
                 ));
             }
@@ -203,6 +200,21 @@ public class HomeFragment extends Fragment {
         } catch (Exception e) {
             return s;
         }
+    }
+    private static String unicodeToString(String str) {
+        Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{2,4}))");
+        Matcher matcher = pattern.matcher(str);
+        char ch;
+        while (matcher.find()) {
+            //group 6728
+            String group = matcher.group(2);
+            //ch:'木' 26408
+            ch = (char) Integer.parseInt(group, 16);
+            //group1 \u6728
+            String group1 = matcher.group(1);
+            str = str.replace(group1, ch + "");
+        }
+        return str;
     }
     public static String utf8ToUnicode(String inStr) {
         char[] myBuffer = inStr.toCharArray();

@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -62,6 +63,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
                 intent.putExtra(ResourceDetail.RESOURCE_INFO, item.getResourceInfo());
                 intent.putExtra(ResourceDetail.RESOURCE_UPLOADER, item.getResourceUploaderName());
                 intent.putExtra(ResourceDetail.RESOURCE_DOWNLOAD_COUNT, item.getResourceDownloadCount());
+                intent.putExtra(ResourceDetail.RESOURCE_URL,item.getResourceUrl());
                 mContext.startActivity(intent);
             }
         });
@@ -73,6 +75,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
         ResourceItem resourceItem = mResourceList.get(position);
         holder.resourceName.setText(resourceItem.getResourceName());
         try {
+            Log.d(TAG, "onBindViewHolder: "+resourceItem.getResourceType());
             holder.resourceImage.setImageResource((int) MainActivity.pictures.get(resourceItem.getResourceType()));
         } catch (Exception e) {
             holder.resourceImage.setImageResource((int) MainActivity.pictures.get("file"));
