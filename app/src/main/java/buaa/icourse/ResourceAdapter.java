@@ -56,6 +56,9 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
                 Intent intent = new Intent(mContext, ResourceDetail.class);
                 intent.putExtra(ResourceDetail.RESOURCE_NAME, item.getResourceName());
                 intent.putExtra(ResourceDetail.RESOURCE_TYPE, item.getResourceType());
+                intent.putExtra(ResourceDetail.RESOURCE_INFO, item.getResourceInfo());
+                intent.putExtra(ResourceDetail.RESOURCE_UPLOADER, item.getResourceUploaderName());
+                intent.putExtra(ResourceDetail.RESOURCE_DOWNLOAD_COUNT, item.getResourceDownloadCount());
                 mContext.startActivity(intent);
             }
         });
@@ -67,7 +70,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
         ResourceItem resourceItem = mResourceList.get(position);
         holder.resourceName.setText(resourceItem.getResourceName());
 
-        holder.resourceImage.setImageResource((int)MainActivity.pictures.get(resourceItem.getResourceType()));
+        holder.resourceImage.setImageResource((int) MainActivity.pictures.get(resourceItem.getResourceType()));
     }
 
     @Override

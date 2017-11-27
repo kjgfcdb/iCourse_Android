@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (Build.VERSION.SDK_INT> 9) {
+        if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         //如果用户成功登录,那么下次点开则不必再出现登录界面了
-        if (pref.getBoolean("online",false)) {
+        if (pref.getBoolean("online", false)) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -91,28 +91,30 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
                     String responseString = client.newCall(request).execute().body().string();
-                    System.out.println("@@"+responseString);
+                    System.out.println("@@" + responseString);
                     JSONArray jsonArray = new JSONArray(responseString);
                     JSONObject jo = jsonArray.getJSONObject(0);
                     //new JSONObject(responseString);
                     res = jo.getString("result");
-                    System.out.println("RES::::::"+res);
+                    System.out.println("RES::::::" + res);
 //                    for (int i = 0; i < jsonArray.length(); i++) {
 //                        JSONObject object = jsonArray.getJSONObject(i);
 //                        resourceItemList.add(new ResourceItem(object.getString("resourceName"),
 //                                object.getString("resourceType")
 //                        ));
 //                    }
-                }catch (Exception e) {e.printStackTrace();}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
-                if ((res.equals("true"))||(Sid.equals("14051131") && Password.equals("123456"))) {
+                if ((Sid.equals("14051131") && Password.equals("123456")) || (res.equals("true"))) {
                     editor = pref.edit();
                     if (checkBox.isChecked()) {
                         editor.putBoolean("remember_password", true);
                         editor.putString("sid", Sid);
                         editor.putString("password", Password);
-                        editor.putBoolean("online",true);
+                        editor.putBoolean("online", true);
                     } else {
                         editor.clear();
                     }

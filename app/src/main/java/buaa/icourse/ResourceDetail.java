@@ -32,6 +32,10 @@ public class ResourceDetail extends AppCompatActivity {
      */
     public static final String RESOURCE_NAME = "resource_name";
     public static final String RESOURCE_TYPE = "resource_type";
+    public static final String RESOURCE_INFO = "resource_info";
+    public static final String RESOURCE_UPLOADER = "resource_uploader";
+    public static final String RESOURCE_DOWNLOAD_COUNT = "resource_download_count";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +45,29 @@ public class ResourceDetail extends AppCompatActivity {
         //获取资源名以及资源类型
         String resourceName = intent.getStringExtra(RESOURCE_NAME);
         String resourceType = intent.getStringExtra(RESOURCE_TYPE);
+        String resourceInfo = intent.getStringExtra(RESOURCE_INFO);
+        String resourceUploader = intent.getStringExtra(RESOURCE_UPLOADER);
+        int resourceDownloadCount = intent.getIntExtra(RESOURCE_DOWNLOAD_COUNT,0);
         //获取工具栏
         Toolbar toolbar = findViewById(R.id.resource_detail_toolbar);
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         ImageView resourceImage = findViewById(R.id.resource_detail_image);
         TextView resourceDetailText = findViewById(R.id.resource_detail_text);
+        TextView resourceUploaderView = findViewById(R.id.resource_detail_uploader_name);
+        TextView resourceDownloadView = findViewById(R.id.resource_down_count);
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        // 设置显示内容
         collapsingToolbar.setTitle(resourceName);
         resourceImage.setImageResource((int) MainActivity.pictures.get(resourceType));
-        resourceDetailText.setText(generateDetailText());
+        resourceDetailText.setText(resourceInfo);
+        resourceUploaderView.setText(resourceUploader);
+        resourceDownloadView.setText(Integer.toString(resourceDownloadCount));
 
         //上传评分
         final RatingBar starRating = findViewById(R.id.resource_detail_rating);
@@ -75,13 +89,6 @@ public class ResourceDetail extends AppCompatActivity {
         });
     }
 
-    String generateDetailText() {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 200; i++) {
-            builder.append("OK");
-        }
-        return builder.toString();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

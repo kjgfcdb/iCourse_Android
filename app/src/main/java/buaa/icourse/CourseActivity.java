@@ -47,13 +47,7 @@ public class CourseActivity extends AppCompatActivity {
             String cypher;
             cypher = "select count(*) from backend_resource;";
 
-//			cypher = "select *  from java_repositories where projectId >= 15032988 limit 5";
-
-
-            //"select *  from java_repositories limit 10;";
-            //"SELECT count(*) FROM java_repositories;";
             String columnName = "name";
-            //"count(*)";
             JSONArray ans;
             ans = con.executeCypher(cypher, 1);
 
@@ -85,11 +79,11 @@ public class CourseActivity extends AppCompatActivity {
                 id = job.getInt("id");
                 System.out.println("id:" + id + " name:" +
                         name);
-
-                ri = new ResourceItem(name, "ppt");
+                ri = new ResourceItem(name, "ppt","www",
+                        "hello world","wangjingyuan",10
+                        );
                 resourceItemList.add(ri);
                 adapter.notifyDataSetChanged();
-
             }
         }
         catch (Exception e) {

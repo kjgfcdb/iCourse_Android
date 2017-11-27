@@ -1,6 +1,5 @@
 package buaa.icourse;
 
-import android.app.DownloadManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,22 +7,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.BatchUpdateException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.Queue;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -34,8 +29,9 @@ public class HomeFragment extends Fragment {
      * 主页面，用于显示排序的资源
      */
     private static final int SUCCESS = 2;//状态识别码
-    private static final int FAILD = 3;
+    private static final int FAILED = 3;
     private List<ResourceItem> resourceItemList = new ArrayList<>();
+    private Queue<ResourceItem> localResourceItemQueue = new ArrayDeque<>();
     private SwipeRefreshLayout swipeRefresh;
     private ResourceAdapter adapter;
     private Handler mHandler = new Handler(new Handler.Callback() {
@@ -45,7 +41,7 @@ public class HomeFragment extends Fragment {
                 case SUCCESS:
 //                    Toast.makeText(getContext(), "更新成功", Toast.LENGTH_LONG).show();
                     break;
-                case FAILD:
+                case FAILED:
 //                    Toast.makeText(getContext(), "更新失败", Toast.LENGTH_LONG).show();
                     break;
                 default:
@@ -88,17 +84,19 @@ public class HomeFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState ==RecyclerView.SCROLL_STATE_IDLE &&
-                        layoutManager.findLastVisibleItemPosition() + 1 ==adapter.getItemCount()) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE &&
+                        layoutManager.findLastVisibleItemPosition() + 1 == adapter.getItemCount()) {
                     bar.setVisibility(View.VISIBLE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            resourceItemList.add(new ResourceItem("New","doc"));
+                            for (int i = 0; i < 5 && localResourceItemQueue.size() > 0; i++) {
+                                resourceItemList.add(localResourceItemQueue.poll());
+                            }
                             adapter.notifyDataSetChanged();
                             bar.setVisibility(View.INVISIBLE);
                         }
-                    },1000);
+                    }, 1000);
                 }
             }
         });
@@ -126,14 +124,22 @@ public class HomeFragment extends Fragment {
             JSONArray jsonArray = new JSONArray(responseString);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                resourceItemList.add(new ResourceItem(object.getString("resourceName"),
-                        object.getString("resourceType")
+                localResourceItemQueue.add(new ResourceItem(
+                        object.getString("resourceName"),
+                        object.getString("resourceType"),
+                        "www",
+                        "hello world",
+                        "wangjingyuan",
+                        10
                 ));
+            }
+            for (int i = 0; localResourceItemQueue.size() > 0 && i < 5; i++) {
+                resourceItemList.add(localResourceItemQueue.poll());
             }
             msg.what = SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
-            msg.what = FAILD;
+            msg.what = FAILED;
         }
         mHandler.sendMessage(msg);
     }
