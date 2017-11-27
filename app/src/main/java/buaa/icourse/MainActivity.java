@@ -50,9 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
     static void initPictures() {
         pictures.put("doc",R.drawable.vector_drawable_file_doc);
+        pictures.put("docx",R.drawable.vector_drawable_file_doc);
         pictures.put("pdf",R.drawable.vector_drawable_pdf);
         pictures.put("xls",R.drawable.vector_drawable_file_xls);
+        pictures.put("xlsx",R.drawable.vector_drawable_file_xls);
         pictures.put("ppt",R.drawable.vector_drawable_file_ppt);
+        pictures.put("pptx",R.drawable.vector_drawable_file_ppt);
         pictures.put("file",R.drawable.vector_drawable_file);
         pictures.put("jpg",R.drawable.vector_drawable_file_jpg);
         pictures.put("png",R.drawable.vector_drawable_file_png);
@@ -60,10 +63,12 @@ public class MainActivity extends AppCompatActivity {
         pictures.put("zip",R.drawable.vector_drawable_file_zip);
         pictures.put("rar",R.drawable.vector_drawable_file_zip);
         pictures.put("mp4",R.drawable.vector_drawable_file_video);
+        pictures.put("MPG",R.drawable.vector_drawable_file_video);
         pictures.put("rmvb",R.drawable.vector_drawable_file_video);
+        pictures.put("mpg",R.drawable.vector_drawable_file_video);
         pictures.put("avi",R.drawable.vector_drawable_file_video);
         pictures.put("swf",R.drawable.vector_drawable_file_video);
-        for (int i = 1; i < 100; ++i){
+        for (int i = 1; i < 33; ++i){
             c_pictures.put(i, R.drawable.school_logo);
         }
     }
