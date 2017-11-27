@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import static buaa.icourse.CourseAdapter.TAG;
 
 
 public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHolder> {
@@ -69,8 +72,11 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         ResourceItem resourceItem = mResourceList.get(position);
         holder.resourceName.setText(resourceItem.getResourceName());
-
-        holder.resourceImage.setImageResource((int) MainActivity.pictures.get(resourceItem.getResourceType()));
+        try {
+            holder.resourceImage.setImageResource((int) MainActivity.pictures.get(resourceItem.getResourceType()));
+        } catch (Exception e) {
+            holder.resourceImage.setImageResource((int) MainActivity.pictures.get("file"));
+        }
     }
 
     @Override

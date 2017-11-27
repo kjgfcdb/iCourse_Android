@@ -64,7 +64,11 @@ public class ResourceDetail extends AppCompatActivity {
 
         // 设置显示内容
         collapsingToolbar.setTitle(resourceName);
-        resourceImage.setImageResource((int) MainActivity.pictures.get(resourceType));
+        try {
+            resourceImage.setImageResource((int) MainActivity.pictures.get(resourceType));
+        } catch (Exception e) {
+            resourceImage.setImageResource((int) MainActivity.pictures.get("file"));
+        }
         resourceDetailText.setText(resourceInfo);
         resourceUploaderView.setText(resourceUploader);
         resourceDownloadView.setText(Integer.toString(resourceDownloadCount));
