@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         pictures.put("avi",R.drawable.vector_drawable_file_video);
         pictures.put("swf",R.drawable.vector_drawable_file_video);
         for (int i = 1; i < 33; ++i){
-            c_pictures.put(i, R.drawable.school_logo);
+            c_pictures.put(i, R.drawable.school_logo_small);
         }
     }
 
