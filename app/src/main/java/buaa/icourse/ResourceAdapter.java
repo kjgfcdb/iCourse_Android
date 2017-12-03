@@ -61,6 +61,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
                 intent.putExtra(ResourceDetail.RESOURCE_NAME, item.getResourceName());
                 intent.putExtra(ResourceDetail.RESOURCE_TYPE, item.getResourceType());
                 intent.putExtra(ResourceDetail.RESOURCE_INFO, item.getResourceInfo());
+                intent.putExtra(ResourceDetail.RESOURCE_EVALUATION, item.getResourceEvaluation());
                 intent.putExtra(ResourceDetail.RESOURCE_UPLOADER, item.getResourceUploaderName());
                 intent.putExtra(ResourceDetail.RESOURCE_DOWNLOAD_COUNT, item.getResourceDownloadCount());
                 intent.putExtra(ResourceDetail.RESOURCE_URL,item.getResourceUrl());

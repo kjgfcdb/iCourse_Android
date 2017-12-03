@@ -136,13 +136,16 @@ public class HomeFragment extends Fragment {
             JSONArray jsonArray = new JSONArray(responseString);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
+                String h = ""+object.getDouble("evaluation");
+                Log.d("EVA == ",Double.toString(object.getDouble("evaluation")));
                 localResourceItemQueue.add(new ResourceItem(
                         unicodeToString(object.getString("resourceName")),
                         object.getString("resourceType"),
                         object.getString("url"),
                         unicodeToString(object.getString("intro")),
                         unicodeToString(object.getString("username")),
-                        object.getInt("downloadCount")
+                        object.getInt("downloadCount"),
+                        object.getDouble("evaluation")
                 ));
             }
             for (int i = 0; localResourceItemQueue.size() > 0 && i < 10; i++) {
