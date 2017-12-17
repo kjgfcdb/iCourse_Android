@@ -80,12 +80,12 @@
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/resource_detail_uploader_name"
                             android:layout_width="0dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="id"
                             android:textSize="20sp" />
 
                     </LinearLayout>
@@ -101,16 +101,16 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="评分"
+                            android:text="下载次数"
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/resource_down_count"
                             android:layout_width="0dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="0"
                             android:textSize="20sp" />
 
                     </LinearLayout>

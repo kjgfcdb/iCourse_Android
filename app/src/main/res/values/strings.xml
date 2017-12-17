@@ -1,5 +1,13 @@
 <resources>
+<<<<<<< HEAD
+
+
+    <string name="edit_message">Enter a message</string>
+
+    <string name="app_name">iCourse</string>
+=======
     <string name="app_name">iCourse课程助手</string>
+>>>>>>> 0d962f23946105fd111e779a2901681d5bec9474
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

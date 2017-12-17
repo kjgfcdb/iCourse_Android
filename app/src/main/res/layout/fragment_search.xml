@@ -1,4 +1,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="buaa.icourse.SearchFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <!--<TextView
+        android:id="@+id/search_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/hello_blank_fragment" />-->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</LinearLayout>
+=======
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -49,3 +77,4 @@
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 </LinearLayout>
+>>>>>>> 0d962f23946105fd111e779a2901681d5bec9474
