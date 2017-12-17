@@ -34,19 +34,12 @@ public class JsonRead {
 
         JSONObject json = null;
 
-//		byte[] b = q.getBytes("gbk");//编码
-//        String sa = new String(b, "gbk");//解码:用什么字符集编码就用什么字符集解码
         q = URLEncoder.encode(q,"UTF-8");
 
 
         String url = "http://10.2.28.124:8080/solr/mynode/select?rows=2000&fl=*%2Cscore&wt=json&indent=true"
                 + "&q=" + q;
 
-//		url = URLEncoder.encode(url,"UTF-8");
-        System.out.println(url);
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$");
-        //System.exit(0);
-//		url = URLEncoder.encode(url,"UTF-8");
         int choose = 0;
         InputStream is;
         while(true) {

@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +32,16 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class UploadFragment extends Fragment {
-    static String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
+//    static String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
+    static String uploadUrl = "http://10.2.28.124:8080/Hello/HelloWorld";
     private static final int SUCCESS = 2;//状态识别码
     private static final int FAILD = 3;
     private TextView fileNameTextView; // 文件名
@@ -100,6 +109,20 @@ public class UploadFragment extends Fragment {
                 files.put(name, new File(path));
                 try {
                     HttpUtil.postFile(uploadUrl, new HashMap<String, String>(), files);
+//                    RequestBody requestBody = new MultipartBody.Builder()
+//                            .setType(MultipartBody.FORM)
+//                            .addFormDataPart("file", name,
+//                                    RequestBody.create(MediaType.parse("image/jpg"), new File(path)))
+//                            .addFormDataPart("filename", name)
+//                            .build();
+//
+//                    Request request = new Request.Builder()
+//                            .url(uploadUrl)
+//                            .post(requestBody)
+//                            .build();
+//                    OkHttpClient client = new OkHttpClient();
+//                    Response response =  client.newCall(request).execute();
+//                    System.out.println(response.body().string());
                     msg.what = SUCCESS;
                 } catch (Exception e) {
                     msg.what = FAILD;

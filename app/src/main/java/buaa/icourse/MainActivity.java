@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigation;
     static Map pictures = new HashMap();
     static Map c_pictures = new HashMap();
+    static Map collegePics = new HashMap();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -50,12 +51,49 @@ public class MainActivity extends AppCompatActivity {
 
     static void initPictures() {
         pictures.put("doc",R.drawable.vector_drawable_file_doc);
+        pictures.put("docx",R.drawable.vector_drawable_file_doc);
         pictures.put("pdf",R.drawable.vector_drawable_pdf);
         pictures.put("xls",R.drawable.vector_drawable_file_xls);
+        pictures.put("xlsx",R.drawable.vector_drawable_file_xls);
         pictures.put("ppt",R.drawable.vector_drawable_file_ppt);
-        for (int i = 1; i < 100; ++i){
+        pictures.put("pptx",R.drawable.vector_drawable_file_ppt);
+        pictures.put("file",R.drawable.vector_drawable_file);
+        pictures.put("jpg",R.drawable.vector_drawable_file_jpg);
+        pictures.put("png",R.drawable.vector_drawable_file_png);
+        pictures.put("gif",R.drawable.vector_drawable_file_gif);
+        pictures.put("zip",R.drawable.vector_drawable_file_zip);
+        pictures.put("rar",R.drawable.vector_drawable_file_zip);
+        pictures.put("mp4",R.drawable.vector_drawable_file_video);
+        pictures.put("MPG",R.drawable.vector_drawable_file_video);
+        pictures.put("rmvb",R.drawable.vector_drawable_file_video);
+        pictures.put("mpg",R.drawable.vector_drawable_file_video);
+        pictures.put("avi",R.drawable.vector_drawable_file_video);
+        pictures.put("swf",R.drawable.vector_drawable_file_video);
+        for (int i = 1; i < 33; ++i){
             c_pictures.put(i, R.drawable.school_logo);
         }
+        collegePics.put(0,R.drawable.school_logo);
+        collegePics.put(1,R.drawable.college_1);
+        collegePics.put(2,R.drawable.college_2);
+        collegePics.put(3,R.drawable.college_3);
+        collegePics.put(4,R.drawable.college_4);
+        collegePics.put(5,R.drawable.college_5);
+        collegePics.put(6,R.drawable.college_6);
+        collegePics.put(7,R.drawable.college_7);
+        collegePics.put(8,R.drawable.college_8);
+        collegePics.put(9,R.drawable.college_9);
+        collegePics.put(10,R.drawable.college_10);
+        collegePics.put(13,R.drawable.college_13);
+        collegePics.put(15,R.drawable.college_15);
+        collegePics.put(17,R.drawable.college_17);
+        collegePics.put(19,R.drawable.college_19);
+        collegePics.put(20,R.drawable.college_20);
+        collegePics.put(21,R.drawable.college_21);
+        collegePics.put(23,R.drawable.college_23);
+        collegePics.put(24,R.drawable.college_24);
+        collegePics.put(26,R.drawable.college_26);
+        collegePics.put(27,R.drawable.college_27);
+        collegePics.put(29,R.drawable.college_29);
     }
 
     @Override

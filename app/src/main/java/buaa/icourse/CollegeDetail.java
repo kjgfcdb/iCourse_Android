@@ -1,17 +1,18 @@
 package buaa.icourse;
 
-import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.Fragment;
+import android.os.StrictMode;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,63 +29,56 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HomeFragment extends Fragment {
-    /**
-     * 主页面，用于显示排序的资源
-     */
-    private static final int SUCCESS = 2;//状态识别码
-    private static final int FAILED = 3;
-    private static final String TAG = "HomeFragment";
+public class CollegeDetail extends AppCompatActivity {
+    public static final String COLLEGE_ID = "college_id";
+    private ResourceAdapter adapter;
     private List<ResourceItem> resourceItemList = new ArrayList<>();
     private Queue<ResourceItem> localResourceItemQueue = new ArrayDeque<>();
+    private int collegeId;
     private SwipeRefreshLayout swipeRefresh;
-    private ResourceAdapter adapter;
-    private Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case SUCCESS:
-//                    Toast.makeText(getContext(), "更新成功", Toast.LENGTH_LONG).show();
-                    break;
-                case FAILED:
-//                    Toast.makeText(getContext(), "更新失败", Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    break;
-            }
-            return false;
-        }
-    });
 
-    public HomeFragment() {
+    private static String unicodeToString(String str) {
+        Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{2,4}))");
+        Matcher matcher = pattern.matcher(str);
+        char ch;
+        while (matcher.find()) {
+            //group 6728
+            String group = matcher.group(2);
+            //ch:'木' 26408
+            ch = (char) Integer.parseInt(group, 16);
+            //group1 \u6728
+            String group1 = matcher.group(1);
+            str = str.replace(group1, ch + "");
+        }
+        return str;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_home, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_course2);
+        collegeId = getIntent().getIntExtra(COLLEGE_ID,6);
         initResources();
-
-        RecyclerView recyclerView = view.findViewById(R.id.home_recycler_view);
-        final ProgressBar bar = view.findViewById(R.id.fragment_home_progress_bar);
+        RecyclerView recyclerView = findViewById(R.id.home_recycler_view2);
+        final ProgressBar bar = findViewById(R.id.fragment_home_progress_bar2);
         //网格布局,设置为1列
-        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
         //设置资源适配器
         adapter = new ResourceAdapter(resourceItemList);
         recyclerView.setAdapter(adapter);
-        //设置滑动刷新器
-        swipeRefresh = view.findViewById(R.id.swipe_refresh);
+
+        swipeRefresh = findViewById(R.id.swipe_refresh2);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-        //下拉刷新
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.
-                OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshResources();
-            }
-        });
-        //上滑加载更多
+        swipeRefresh.setOnRefreshListener(
+                new SwipeRefreshLayout.
+                        OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        refreshResources();
+                    }
+                }
+        );
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -105,58 +99,50 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-        return view;
+        TextView no_resource = findViewById(R.id.no_resource);
+        if (resourceItemList.size()==0 && localResourceItemQueue.size()==0) {
+            no_resource.setVisibility(View.VISIBLE);
+        }
     }
 
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
-    }
-
-    public void initResources() {
-        //初始化资源
-        resourceItemList.clear();
+    void initResources() {
         localResourceItemQueue.clear();
-        Message msg = Message.obtain();
+        resourceItemList.clear();
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(UploadFragment.uploadUrl)
                     .post(new FormBody.Builder()
-                            .add("homePage", "init")
+                            .add("CollegeId", Integer.toString(collegeId))
                             .build()
                     ).build();
             Response response = client.newCall(request).execute();
             byte[] bytes = response.body().bytes();
-
             String responseString = new String(bytes);
-//            String responseString = response.body().string().toString();
-            Log.d(TAG, "initResources: " + bytes.length);
-            Log.d(TAG, "initResources: " + responseString);
             JSONArray jsonArray = new JSONArray(responseString);
-            for (int i = 0; i < jsonArray.length(); i++) {
+            int siz = jsonArray.length();
+            for (int i = 0; i < siz; i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                localResourceItemQueue.add(new ResourceItem(
-                        unicodeToString(object.getString("resourceName")),
-                        object.getString("resourceType"),
-                        object.getString("url"),
-                        unicodeToString(object.getString("intro")),
-                        unicodeToString(object.getString("username")),
-                        object.getInt("downloadCount")
-                ));
+                String resourceType = unicodeToString(object.getString("resourceType"));
+                String url = object.getString("url");
+                String name = unicodeToString(object.getString("resourceName"));
+                String intro = unicodeToString(object.getString("intro"));
+                String username = unicodeToString(object.getString("username"));
+                int downloadCount = object.getInt("downloadCount");
+                ResourceItem ri = new ResourceItem(name, resourceType, url,
+                        intro, username, downloadCount
+                );
+                localResourceItemQueue.add(ri);
             }
             for (int i = 0; localResourceItemQueue.size() > 0 && i < 10; i++) {
                 resourceItemList.add(localResourceItemQueue.poll());
             }
-            msg.what = SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
-            msg.what = FAILED;
         }
-        mHandler.sendMessage(msg);
     }
 
-    public void refreshResources() {
+    void refreshResources() {
         //下滑刷新页面
         new Thread(new Runnable() {
             @Override
@@ -166,7 +152,8 @@ public class HomeFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                getActivity().runOnUiThread(new Runnable() {
+
+                CollegeDetail.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         initResources();
@@ -178,19 +165,4 @@ public class HomeFragment extends Fragment {
         }).start();
     }
 
-    private static String unicodeToString(String str) {
-        Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{2,4}))");
-        Matcher matcher = pattern.matcher(str);
-        char ch;
-        while (matcher.find()) {
-            //group 6728
-            String group = matcher.group(2);
-            //ch:'木' 26408
-            ch = (char) Integer.parseInt(group, 16);
-            //group1 \u6728
-            String group1 = matcher.group(1);
-            str = str.replace(group1, ch + "");
-        }
-        return str;
-    }
 }

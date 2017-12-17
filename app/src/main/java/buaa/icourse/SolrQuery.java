@@ -15,11 +15,7 @@ public class SolrQuery {
         JsonRead jr = new JsonRead();
         JSONObject json = jr.readJsonFromUrl(q);
 
-        System.out.println("*************");
-        System.out.println(json.toString());
         JSONObject json2 = json.getJSONObject("response");
-        System.out.println(json2.toString());
-        System.out.println(json2.getInt("numFound"));
 
         JSONArray jsonArray = json2.getJSONArray("docs");
 

@@ -94,43 +94,4 @@ class HttpUtil {
         conn.disconnect();
         return in.toString();
     }
-
-    static void downloadFile(final String urlpath, final String remoteFileName,final String localFileName) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(urlpath);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setReadTimeout(5000);
-                    con.setConnectTimeout(5000);
-                    con.setRequestProperty("filename",remoteFileName);
-                    con.setRequestProperty("Charset", "UTF-8");
-                    con.setRequestMethod("GET");
-                    if (con.getResponseCode() == 200) {
-                        InputStream is = con.getInputStream();//获取输入流
-                        FileOutputStream fileOutputStream = null;//文件输出流
-                        if (is != null) {
-                            FileUtils fileUtils = new FileUtils();
-                            fileOutputStream = new FileOutputStream(fileUtils.createFile(localFileName));//指定文件保存路径，代码看下一步
-                            byte[] buf = new byte[1024];
-                            int ch;
-                            while ((ch = is.read(buf)) != -1) {
-                                fileOutputStream.write(buf, 0, ch);//将获取到的流写入文件中
-                            }
-                        }
-                        if (fileOutputStream != null) {
-                            fileOutputStream.flush();
-                            fileOutputStream.close();
-                        }
-                        Log.d(TAG, "run: Succeeded to download");
-                    } else {
-                        Log.d(TAG, "run: Failed to download");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 }

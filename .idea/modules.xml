@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+<<<<<<< HEAD
       <module fileurl="file://E:\GitHub\iCourse_Main\iCourse.iml" filepath="E:\GitHub\iCourse_Main\iCourse.iml" />
+=======
+>>>>>>> 321e2cd8a19cfa1f71ec1e68cb42a3dc134d2d70
       <module fileurl="file://$PROJECT_DIR$/iCourse_Main.iml" filepath="$PROJECT_DIR$/iCourse_Main.iml" />
     </modules>
   </component>
