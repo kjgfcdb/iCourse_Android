@@ -8,9 +8,7 @@ class FileUtils {
 
     FileUtils() {
         File file = new File(path);
-        /**
-         *如果文件夹不存在就创建
-         */
+        //如果文件不存在就创建
         if (!file.exists()) {
             file.mkdirs();
         }

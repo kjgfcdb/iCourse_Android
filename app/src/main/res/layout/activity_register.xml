@@ -1,21 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="用户注册"
-            android:textColor="@color/colorPrimary"
-            android:textSize="23sp" />
-    </RelativeLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:scaleX="3"
+        android:scaleY="3"
+        app:srcCompat="@drawable/vector_drawable_register" />
 
 
     <LinearLayout
@@ -24,104 +20,107 @@
         android:layout_marginLeft="10.0dip"
         android:layout_marginRight="10.0dip"
         android:layout_marginTop="20.0dip"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="50.0dip"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="学号:"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
+                android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/student_no"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:inputType="number"
                 android:hint="字母/数字/符号的任意组合"
-                android:layout_height="wrap_content" />
+                android:inputType="number" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="50.0dip"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="密码:"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
+                android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/student_passwd"
                 android:layout_width="0dp"
-                android:inputType="textPassword"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:hint="密码长度不超过16位"
-                android:layout_height="wrap_content" />
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="50.0dip"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="邮箱号:"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
+                android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/student_mail"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:inputType="textEmailAddress"
-                android:layout_height="wrap_content" />
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="50.0dip"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="性别:"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
+                android:textSize="20sp" />
 
             <RadioGroup
-                android:id="@+id/registInputSex"
+                android:id="@+id/student_gender"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:layout_weight="2"
+                android:layout_marginEnd="15.0dip"
                 android:layout_marginLeft="10.0dip"
                 android:layout_marginRight="15.0dip"
-                android:orientation="horizontal"
                 android:layout_marginStart="10.0dip"
-                android:layout_marginEnd="15.0dip">
+                android:layout_weight="2"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/reg_boy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="男"
+                    android:text="Male"
                     android:textColor="@android:color/black"
                     android:textSize="18.0sp" />
 
@@ -131,61 +130,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="60.0dip"
                     android:checked="false"
-                    android:text="女"
+                    android:text="Female"
                     android:textColor="@android:color/black"
                     android:textSize="18.0sp" />
             </RadioGroup>
         </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="50.0dip"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="系号:"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:inputType="number"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-
     </LinearLayout>
 
-    <ViewSwitcher
-        android:id="@+id/registViewSwitcher"
+
+    <Button
+        android:id="@+id/registerButton"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30.0dip"
+        android:layout_marginRight="30.0dip"
+        android:layout_marginTop="20.0dip"
+        android:text="注      册"
+        android:textSize="21sp"
+        android:theme="@style/Widget.AppCompat.Button.Borderless" />
 
-        <!-- 注册按钮 -->
-
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30.0dip"
-            android:layout_marginRight="30.0dip"
-            android:layout_marginTop="20.0dip"
-            android:text="注      册"
-            android:textColor="#ff000000"
-            android:textSize="21sp" />
-
-        <View
-            android:id="@+id/registViewLoading"
-            android:layout_width="120.0dip"
-            android:layout_height="120.0dip"
-            android:layout_gravity="center"
-            />
-    </ViewSwitcher>
 
 </LinearLayout>

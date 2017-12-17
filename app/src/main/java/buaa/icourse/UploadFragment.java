@@ -32,9 +32,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UploadFragment extends Fragment {
+    static String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
     private static final int SUCCESS = 2;//状态识别码
     private static final int FAILD = 3;
-    private String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
     private TextView fileNameTextView; // 文件名
 
     private String path;//本地文件路径
@@ -71,7 +71,6 @@ public class UploadFragment extends Fragment {
         return view;
     }
     private Handler mHandler = new Handler(new Handler.Callback() {
-
         @Override
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
@@ -88,7 +87,6 @@ public class UploadFragment extends Fragment {
             }
             return false;
         }
-
     });
     private void uploadFile() {
         new Thread() {
@@ -246,6 +244,4 @@ public class UploadFragment extends Fragment {
     public boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
-
-
 }
