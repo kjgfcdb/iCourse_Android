@@ -72,12 +72,28 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 1; i < 33; ++i){
             c_pictures.put(i, R.drawable.school_logo);
         }
+        collegePics.put(0,R.drawable.school_logo);
         collegePics.put(1,R.drawable.college_1);
+        collegePics.put(2,R.drawable.college_2);
+        collegePics.put(3,R.drawable.college_3);
+        collegePics.put(4,R.drawable.college_4);
+        collegePics.put(5,R.drawable.college_5);
         collegePics.put(6,R.drawable.college_6);
+        collegePics.put(7,R.drawable.college_7);
         collegePics.put(8,R.drawable.college_8);
+        collegePics.put(9,R.drawable.college_9);
+        collegePics.put(10,R.drawable.college_10);
+        collegePics.put(13,R.drawable.college_13);
         collegePics.put(15,R.drawable.college_15);
+        collegePics.put(17,R.drawable.college_17);
+        collegePics.put(19,R.drawable.college_19);
         collegePics.put(20,R.drawable.college_20);
+        collegePics.put(21,R.drawable.college_21);
+        collegePics.put(23,R.drawable.college_23);
+        collegePics.put(24,R.drawable.college_24);
+        collegePics.put(26,R.drawable.college_26);
         collegePics.put(27,R.drawable.college_27);
+        collegePics.put(29,R.drawable.college_29);
     }
 
     @Override

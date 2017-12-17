@@ -27,9 +27,8 @@ public class CategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         initResources();
         RecyclerView recyclerView = view.findViewById(R.id.category_recycler_view);
-        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-
         //设置布局为两列
+        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new CollegeAdapter(CollegeList);
         recyclerView.setAdapter(adapter);
@@ -67,8 +66,7 @@ public class CategoryFragment extends Fragment {
 
 
     public static CategoryFragment newInstance() {
-        CategoryFragment categoryFragment = new CategoryFragment();
-        return categoryFragment;
+        return new CategoryFragment();
     }
 
 

@@ -72,7 +72,7 @@ public class CollegeAdapter extends RecyclerView.Adapter<CollegeAdapter.ViewHold
             holder.collegePic.setImageResource((int) MainActivity.collegePics.get(collegeItem.getCollegeId()));
         } catch (Exception e) {
             //默认显示6系
-            holder.collegePic.setImageResource((int) MainActivity.collegePics.get(6));
+            holder.collegePic.setImageResource((int) MainActivity.collegePics.get(0));
         }
     }
 
