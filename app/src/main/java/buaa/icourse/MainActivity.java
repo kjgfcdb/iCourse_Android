@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigation;
     static Map pictures = new HashMap();
     static Map c_pictures = new HashMap();
+    static Map collegePics = new HashMap();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -71,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 1; i < 33; ++i){
             c_pictures.put(i, R.drawable.school_logo);
         }
+        collegePics.put(1,R.drawable.college_1);
+        collegePics.put(6,R.drawable.college_6);
+        collegePics.put(8,R.drawable.college_8);
+        collegePics.put(15,R.drawable.college_15);
+        collegePics.put(20,R.drawable.college_20);
+        collegePics.put(27,R.drawable.college_27);
     }
 
     @Override

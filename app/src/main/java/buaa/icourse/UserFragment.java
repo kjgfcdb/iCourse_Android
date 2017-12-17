@@ -53,6 +53,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editor.putBoolean("online", false);
+                editor.putBoolean("userInfoFilled",false);
                 editor.apply();
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
