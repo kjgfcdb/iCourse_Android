@@ -124,8 +124,11 @@ public class CollegeDetail extends AppCompatActivity {
                 System.out.println("%%%" + name);
                 college_id = courseData.getInt("college_id");
                 course_code = (String) courseData.get("course_code");
+                String course_teacher = courseData.getString("course_teacher");
+                String course_credit = courseData.getString("course_credit");
+                String course_type = courseData.getString("course_type");
                 System.out.println("???" + course_code);
-                ri = new CourseItem(name, course_code, college_id);
+                ri = new CourseItem(name, course_code, college_id,course_teacher,course_credit,course_type);
                 //courseItemList.add(ri);
                 localCourseItemQueue.add(ri);
                 //adapter.notifyDataSetChanged();

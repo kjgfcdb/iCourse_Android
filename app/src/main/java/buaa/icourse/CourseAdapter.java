@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,12 +40,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         //资源图片以及资源名
         ImageView courseImage;
         TextView courseName;
+        TextView courseTeacherName;
+        TextView courseCredit;
+        TextView courseType;
 
         ViewHolder(View view) {
             super(view);
             layout = (LinearLayout) view;
             courseImage = view.findViewById(R.id.course_image);
             courseName = view.findViewById(R.id.course_item_name);
+            courseTeacherName = view.findViewById(R.id.course_item_teacherName);
+            courseCredit = view.findViewById(R.id.course_item_credit);
+            courseType = view.findViewById(R.id.course_item_type);
         }
     }
 
@@ -70,11 +77,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 int position = holder.getAdapterPosition();
                 CourseItem item = mCourseList.get(position);
 
-                String courseName  = item.getCourseName();
-                int courseType = item.getCourseType();
+                String courseName = item.getCourseName();
+                int courseType = item.getCollegeId();
                 String courseCode = item.getCourseCode();
 
-                Log.d(TAG, "!!!!!Query: "+courseName+"^^^^^^"+courseType+"*******"+courseCode);
+                Log.d(TAG, "!!!!!Query: " + courseName + "^^^^^^" + courseType + "*******" + courseCode);
 
 
                 Intent intent = new Intent(mContext, CourseActivity.class);
@@ -89,8 +96,15 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         CourseItem courseItem = mCourseList.get(position);
         holder.courseName.setText(courseItem.getCourseName());
-
-        holder.courseImage.setImageResource((int)MainActivity.c_pictures.get(courseItem.getCourseType()));
+        try{
+            holder.courseImage.setImageResource((int) MainActivity.collegePics.get(courseItem.getCollegeId()));
+        } catch (Exception e) {
+            holder.courseImage.setImageResource((int) MainActivity.collegePics.get(0));
+            e.printStackTrace();
+        }
+        holder.courseTeacherName.setText(courseItem.getTeacherName());
+        holder.courseCredit.setText(courseItem.getCredit());
+        holder.courseType.setText(courseItem.getCourseType());
     }
 
     @Override
