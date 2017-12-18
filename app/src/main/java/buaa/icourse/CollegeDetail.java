@@ -29,13 +29,22 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static java.lang.Math.min;
+
 public class CollegeDetail extends AppCompatActivity {
     public static final String COLLEGE_ID = "college_id";
-    private ResourceAdapter adapter;
-    private List<ResourceItem> resourceItemList = new ArrayList<>();
-    private Queue<ResourceItem> localResourceItemQueue = new ArrayDeque<>();
+    private CourseAdapter adapter;
+    //private List<ResourceItem> courseItemList = new ArrayList<>();
+    private List<CourseItem> courseItemList = new ArrayList<>();
+    private Queue<CourseItem> localCourseItemQueue = new ArrayDeque<>();
     private int collegeId;
     private SwipeRefreshLayout swipeRefresh;
+
+    CourseItem ri;
+    SolrQuery st = new SolrQuery();
+    JSONArray ja;
+    String name, course_code;
+    int college_id;
 
     private static String unicodeToString(String str) {
         Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{2,4}))");
@@ -58,14 +67,14 @@ public class CollegeDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course2);
         collegeId = getIntent().getIntExtra(COLLEGE_ID,6);
-        initResources();
+        initCourses();
         RecyclerView recyclerView = findViewById(R.id.home_recycler_view2);
         final ProgressBar bar = findViewById(R.id.fragment_home_progress_bar2);
         //网格布局,设置为1列
         final GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
         //设置资源适配器
-        adapter = new ResourceAdapter(resourceItemList);
+        adapter = new CourseAdapter(courseItemList);
         recyclerView.setAdapter(adapter);
 
         swipeRefresh = findViewById(R.id.swipe_refresh2);
@@ -75,7 +84,7 @@ public class CollegeDetail extends AppCompatActivity {
                         OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        refreshResources();
+                        refreshCourses();
                     }
                 }
         );
@@ -89,8 +98,8 @@ public class CollegeDetail extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            for (int i = 0; i < 5 && localResourceItemQueue.size() > 0; i++) {
-                                resourceItemList.add(localResourceItemQueue.poll());
+                            for (int i = 0; i < 5 && localCourseItemQueue.size() > 0; i++) {
+                                courseItemList.add(localCourseItemQueue.poll());
                             }
                             adapter.notifyDataSetChanged();
                             bar.setVisibility(View.INVISIBLE);
@@ -100,49 +109,36 @@ public class CollegeDetail extends AppCompatActivity {
             }
         });
         TextView no_resource = findViewById(R.id.no_resource);
-        if (resourceItemList.size()==0 && localResourceItemQueue.size()==0) {
+        if (courseItemList.size()==0 && localCourseItemQueue.size()==0) {
             no_resource.setVisibility(View.VISIBLE);
         }
     }
-
-    void initResources() {
-        localResourceItemQueue.clear();
-        resourceItemList.clear();
+    void initCourses() {
+        localCourseItemQueue.clear();
+        courseItemList.clear();
         try {
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(UploadFragment.uploadUrl)
-                    .post(new FormBody.Builder()
-                            .add("CollegeId", Integer.toString(collegeId))
-                            .build()
-                    ).build();
-            Response response = client.newCall(request).execute();
-            byte[] bytes = response.body().bytes();
-            String responseString = new String(bytes);
-            JSONArray jsonArray = new JSONArray(responseString);
-            int siz = jsonArray.length();
-            for (int i = 0; i < siz; i++) {
-                JSONObject object = jsonArray.getJSONObject(i);
-                String resourceType = unicodeToString(object.getString("resourceType"));
-                String url = object.getString("url");
-                String name = unicodeToString(object.getString("resourceName"));
-                String intro = unicodeToString(object.getString("intro"));
-                String username = unicodeToString(object.getString("username"));
-                int downloadCount = object.getInt("downloadCount");
-                ResourceItem ri = new ResourceItem(name, resourceType, url,
-                        intro, username, downloadCount
-                );
-                localResourceItemQueue.add(ri);
+            ja = st.work(Integer.toString(collegeId), 1);
+            for (int i = 0; i < ja.length(); ++i) {
+                JSONObject courseData = ja.getJSONObject(i);
+                name = (String) courseData.get("name");
+                System.out.println("%%%" + name);
+                college_id = courseData.getInt("college_id");
+                course_code = (String) courseData.get("course_code");
+                System.out.println("???" + course_code);
+                ri = new CourseItem(name, course_code, college_id);
+                //courseItemList.add(ri);
+                localCourseItemQueue.add(ri);
+                //adapter.notifyDataSetChanged();
             }
-            for (int i = 0; localResourceItemQueue.size() > 0 && i < 10; i++) {
-                resourceItemList.add(localResourceItemQueue.poll());
+            for (int i = 0; localCourseItemQueue.size() > 0 && i < 10; i++) {
+                courseItemList.add(localCourseItemQueue.poll());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void refreshResources() {
+    void refreshCourses() {
         //下滑刷新页面
         new Thread(new Runnable() {
             @Override
@@ -156,7 +152,7 @@ public class CollegeDetail extends AppCompatActivity {
                 CollegeDetail.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        initResources();
+                        initCourses();
                         adapter.notifyDataSetChanged();
                         swipeRefresh.setRefreshing(false);
                     }

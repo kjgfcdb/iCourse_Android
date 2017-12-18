@@ -32,16 +32,8 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ResourceDetail" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <activity android:name=".DisplayMessageActivity"></activity>
-=======
-=======
         <activity android:name=".CourseActivity" />
         <activity android:name=".CollegeDetail" />
->>>>>>> 321e2cd8a19cfa1f71ec1e68cb42a3dc134d2d70
-
->>>>>>> 0d962f23946105fd111e779a2901681d5bec9474
     </application>
 
 </manifest>

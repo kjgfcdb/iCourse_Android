@@ -64,7 +64,7 @@ public class SearchFragment extends Fragment {
                 String str = et.getText().toString();
                 Log.d(TAG, "!!!!!Query: "+str);
                 try {
-                    ja = st.work(str);
+                    ja = st.work(str, 1);
                     for (int i = 0; i < min(10, ja.length()); ++i) {
                         JSONObject courseData = ja.getJSONObject(i);
                         score = courseData.getDouble("score");

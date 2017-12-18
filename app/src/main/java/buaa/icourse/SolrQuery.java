@@ -11,9 +11,9 @@ import java.net.MalformedURLException;
 
 public class SolrQuery {
 
-    public JSONArray work(String q) throws IOException, JSONException {
+    public JSONArray work(String q, int type) throws IOException, JSONException {
         JsonRead jr = new JsonRead();
-        JSONObject json = jr.readJsonFromUrl(q);
+        JSONObject json = jr.readJsonFromUrl(q, type);
 
         JSONObject json2 = json.getJSONObject("response");
 
