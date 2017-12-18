@@ -172,7 +172,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
-            android:text="上传"
+            android:text="暂不支持上传，敬请期待"
             android:textAllCaps="false" />
     </LinearLayout>
 </RelativeLayout>

@@ -99,6 +99,8 @@ public class UploadFragment extends Fragment {
         }
     });
     private void uploadFile() {
+        // !!!!!!! 2017.12.18 由于时间原因暂时阉割此功能。
+        /*
         new Thread() {
             @Override
             public void run() {
@@ -131,6 +133,7 @@ public class UploadFragment extends Fragment {
                 mHandler.sendMessage(msg);
             }
         }.start();
+        */
     }
 
     public static UploadFragment newInstance() {
