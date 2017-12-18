@@ -40,8 +40,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UploadFragment extends Fragment {
-//    static String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
-    static String uploadUrl = "http://10.2.28.124:8080/Hello/HelloWorld";
+    //static String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
+    static String uploadUrl1 = "http://39.106.60.94:8080/Hello/HelloWorld";
+    static String uploadUrl = "http://10.2.28.124:8080/Hello/HelloWorld";// "http://10.2.28.124:8080/dir/2017/12/";
     private static final int SUCCESS = 2;//状态识别码
     private static final int FAILD = 3;
     private TextView fileNameTextView; // 文件名
@@ -108,7 +109,7 @@ public class UploadFragment extends Fragment {
                 String name = path.substring(path.lastIndexOf("/")+1,path.length());
                 files.put(name, new File(path));
                 try {
-                    HttpUtil.postFile(uploadUrl, new HashMap<String, String>(), files);
+                    HttpUtil.postFile(uploadUrl1, new HashMap<String, String>(), files);
 //                    RequestBody requestBody = new MultipartBody.Builder()
 //                            .setType(MultipartBody.FORM)
 //                            .addFormDataPart("file", name,

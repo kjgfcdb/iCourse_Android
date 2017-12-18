@@ -22,10 +22,12 @@ public class SolrQuery {
         double score;
         for (int i = 0; i < jsonArray.length(); ++i) {
             JSONObject courseData = jsonArray.getJSONObject(i);
-            score = courseData.getDouble("score");
-            if (score < 5)
-                continue;
-            System.out.println(score);
+            if (type == 1) { //seearch
+                score = courseData.getDouble("score");
+                if (score < 5)
+                    continue;
+                System.out.println(score);
+            }
             System.out.println(courseData.get("college_id")+"  :  "+courseData.get("name"));
         }
         return jsonArray;

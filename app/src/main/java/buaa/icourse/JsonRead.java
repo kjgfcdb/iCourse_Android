@@ -38,11 +38,12 @@ public class JsonRead {
 
         String url = "";
         if (type == 1)//search
-            url = "http://10.2.28.124:8080/solr/mynode/select?rows=2000&fl=*%2Cscore&wt=json&indent=true"
+            url = "http://10.2.28.124:8080/solr/mynode/select?rows=3000&fl=*%2Cscore&wt=json&indent=true"
                 + "&q=" + q;
         else
-            url = "http://10.2.28.124:8080/solr/mynode/select?q=*%3A*&fq=college_id%3A"
-                    +q+"&rows=10000&wt=json&indent=true";
+            url = "http://10.2.28.124:8080/solr/mynode/select?q=*%3A*&fq=college_id%3A%5B"
+                    +q+"+TO+"+q+"%5D&rows=3000&wt=json&indent=true";
+            //url = "http://10.2.28.124:8080/solr/mynode/select?q=*%3A*&fq=college_id%3A"+q+"&rows=10000&wt=json&indent=true";
 
 
         int choose = 0;

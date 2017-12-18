@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,13 @@ public class CategoryFragment extends Fragment {
         return view;
     }
 
+    private static final String TAG = "CategoryFragment";
+
     private void initResources() {
+        if (CollegeList.size() >= 26){
+            Log.e(TAG, "DDDDDDDDD#");
+            return ;
+        }
         CollegeList.add(new CollegeItem("材料科学与工程学院",1));
         CollegeList.add(new CollegeItem("电子信息工程学院",2));
         CollegeList.add(new CollegeItem("自动化科学与电气工程学院",3));

@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 import java.util.regex.Matcher;
@@ -32,7 +33,9 @@ import okhttp3.Response;
 import static java.lang.Math.min;
 
 public class CollegeDetail extends AppCompatActivity {
+    public static final String TAG = "CollegeDetail";
     public static final String COLLEGE_ID = "college_id";
+
     private CourseAdapter adapter;
     //private List<ResourceItem> courseItemList = new ArrayList<>();
     private List<CourseItem> courseItemList = new ArrayList<>();
@@ -43,7 +46,7 @@ public class CollegeDetail extends AppCompatActivity {
     CourseItem ri;
     SolrQuery st = new SolrQuery();
     JSONArray ja;
-    String name, course_code;
+    String name, course_code, course_teacher, course_credit, course_type;
     int college_id;
 
     private static String unicodeToString(String str) {
@@ -114,19 +117,45 @@ public class CollegeDetail extends AppCompatActivity {
         }
     }
     void initCourses() {
+        final HashMap<String, String> mp_class_id = new HashMap<String, String>();
+        mp_class_id.put("1", "工程基础类");
+        mp_class_id.put("2", "数学与自然科学类");
+        mp_class_id.put("3", "语言类");
+        mp_class_id.put("4", "博雅类");
+        mp_class_id.put("5", "核心通识类");
+        mp_class_id.put("6", "体育类");
+        mp_class_id.put("7", "一般通识类");
+        mp_class_id.put("8", "核心专业类");
+        mp_class_id.put("9", "一般专业类");
+
         localCourseItemQueue.clear();
         courseItemList.clear();
         try {
-            ja = st.work(Integer.toString(collegeId), 1);
+            ja = st.work(Integer.toString(collegeId), 0);
             for (int i = 0; i < ja.length(); ++i) {
+                course_teacher = course_credit = course_type = "";
+
                 JSONObject courseData = ja.getJSONObject(i);
                 name = (String) courseData.get("name");
                 System.out.println("%%%" + name);
                 college_id = courseData.getInt("college_id");
                 course_code = (String) courseData.get("course_code");
-                String course_teacher = courseData.getString("course_teacher");
-                String course_credit = courseData.getString("course_credit");
-                String course_type = courseData.getString("course_type");
+                if (courseData.has("teacher"))
+                    course_teacher = "教师:"+courseData.getString("teacher");
+
+                if (courseData.has("credit")) {
+                    course_credit = courseData.getString("credit");
+                    if (course_credit=="0.0")
+                        course_credit = "";
+                    else
+                        course_credit += "学分";
+                    Log.e(TAG, course_credit);
+                }
+
+                if (courseData.has("class_id")) {
+                    course_type = courseData.getString("class_id");
+                    course_type = mp_class_id.get(course_type);
+                }
                 System.out.println("???" + course_code);
                 ri = new CourseItem(name, course_code, college_id,course_teacher,course_credit,course_type);
                 //courseItemList.add(ri);

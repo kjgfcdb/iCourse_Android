@@ -97,10 +97,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         CourseItem courseItem = mCourseList.get(position);
         holder.courseName.setText(courseItem.getCourseName());
         try{
-            holder.courseImage.setImageResource((int) MainActivity.collegePics.get(courseItem.getCollegeId()));
+            //Log.e(TAG, "UUUUYYYUUUIII"+Integer.toString(courseItem.getCollegeId()));
+            if (courseItem != null)
+                holder.courseImage.setImageResource((int) MainActivity.collegePics.get(courseItem.getCollegeId()));
         } catch (Exception e) {
             holder.courseImage.setImageResource((int) MainActivity.collegePics.get(0));
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         holder.courseTeacherName.setText(courseItem.getTeacherName());
         holder.courseCredit.setText(courseItem.getCredit());
