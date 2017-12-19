@@ -15,6 +15,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -64,6 +66,22 @@ public class UserFragment extends Fragment {
             put(  29, "人文与社会科学高等研究");
         }
     };
+
+    private static String unicodeToString(String str) {
+        Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{2,4}))");
+        Matcher matcher = pattern.matcher(str);
+        char ch;
+        while (matcher.find()) {
+            //group 6728
+            String group = matcher.group(2);
+            //ch:'木' 26408
+            ch = (char) Integer.parseInt(group, 16);
+            //group1 \u6728
+            String group1 = matcher.group(1);
+            str = str.replace(group1, ch + "");
+        }
+        return str;
+    }
 
     public UserFragment() {
     }
@@ -119,7 +137,7 @@ public class UserFragment extends Fragment {
             String _user_email = jo.getString("user_email");
             String _user_credit = "";
             if (jo.has("user_intro"))
-                _user_credit = jo.getString("user_intro");//jo.getString("user_credit");
+                _user_credit = unicodeToString(jo.getString("user_intro"));//jo.getString("user_credit");
             editor = pref.edit();
             editor.putBoolean("userInfoFilled", true);
             editor.putString("user_id", _user_id);

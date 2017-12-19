@@ -10,7 +10,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="135dp"
+        android:layout_height="120dp"
         android:elevation="10dp"
         app:srcCompat="@drawable/fragment_user_icon" />
 
@@ -95,14 +95,14 @@
                     android:layout_marginLeft="10dp"
                     android:text="个人介绍"
                     android:layout_marginRight="10dp"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/user_credit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </LinearLayout>

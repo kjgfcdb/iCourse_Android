@@ -145,8 +145,11 @@ public class CollegeDetail extends AppCompatActivity {
 
                 if (courseData.has("credit")) {
                     course_credit = courseData.getString("credit");
-                    if (course_credit=="0.0")
+                    Log.e(TAG, "!!!"+course_credit+"!!!");
+                    if (course_credit.equals("0.0")||course_credit.equals("0")) {
                         course_credit = "";
+                        Log.e(TAG, course_credit);
+                    }
                     else
                         course_credit += "学分";
                     Log.e(TAG, course_credit);

@@ -94,7 +94,7 @@
     <string name="plz_input_res_dscrp">请输入资源描述</string>
     <string name="register">注册</string>
     <string name="login">登录</string>
-    <string name="sid">学号</string>
+    <string name="sid">用户名</string>
     <string name="resource_name">资源名</string>
 
 </resources>
