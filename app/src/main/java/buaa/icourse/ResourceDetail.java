@@ -1,15 +1,20 @@
 package buaa.icourse;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +42,7 @@ public class ResourceDetail extends AppCompatActivity {
     public static final String RESOURCE_UPLOADER = "resource_uploader";
     public static final String RESOURCE_DOWNLOAD_COUNT = "resource_download_count";
     public static final String RESOURCE_URL = "resource_url";
+    private String m_url;
 
 
     @Override
@@ -50,7 +56,7 @@ public class ResourceDetail extends AppCompatActivity {
         String resourceInfo = intent.getStringExtra(RESOURCE_INFO);
         String resourceUploader = intent.getStringExtra(RESOURCE_UPLOADER);
         final String resourceUrl = intent.getStringExtra(RESOURCE_URL);
-        int resourceDownloadCount = intent.getIntExtra(RESOURCE_DOWNLOAD_COUNT,0);
+        int resourceDownloadCount = intent.getIntExtra(RESOURCE_DOWNLOAD_COUNT, 0);
         //获取工具栏
         Toolbar toolbar = findViewById(R.id.resource_detail_toolbar);
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
@@ -128,16 +134,48 @@ public class ResourceDetail extends AppCompatActivity {
 
     public void doDownloadFile(String url) {
         // 调用系统自带下载器下载文件
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir("/download/", url.substring(url.lastIndexOf("/")));
-        DownloadManager downloadManager = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
-        try {
-            assert downloadManager != null;
-            downloadManager.enqueue(request);
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Failed to download",
-                    Toast.LENGTH_SHORT).show();
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, 1);
+            m_url = url;
+        } else {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationInExternalPublicDir("/download/", url.substring(url.lastIndexOf("/")));
+            DownloadManager downloadManager = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
+            try {
+                assert downloadManager != null;
+                downloadManager.enqueue(request);
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Failed to download",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                //在此处做文件枚举
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(m_url));
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir("/download/", m_url.substring(m_url.lastIndexOf("/")));
+                DownloadManager downloadManager = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
+                try {
+                    assert downloadManager != null;
+                    downloadManager.enqueue(request);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Failed to download",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 }
