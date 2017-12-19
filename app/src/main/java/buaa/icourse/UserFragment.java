@@ -134,7 +134,9 @@ public class UserFragment extends Fragment {
             JSONObject jo = jsonArray.getJSONObject(0);
             String _user_id = pref.getString("sid", "$$$");//"";//jo.getString("nickname");//"";//jo.getString("user_id");
             System.out.println("@@@"+_user_id);
-            String _user_email = jo.getString("user_email");
+            String _user_email = "";
+            if (jo.has("user_email"))
+                _user_email = jo.getString("user_email");
             String _user_credit = "";
             if (jo.has("user_intro"))
                 _user_credit = unicodeToString(jo.getString("user_intro"));//jo.getString("user_credit");
