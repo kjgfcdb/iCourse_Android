@@ -38,13 +38,67 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Pattern p = null;
+                Matcher m = null;
+                String user_name = studentNo.getText().toString();
+                String mail = studentMail.getText().toString();
+                String passwd = studentPasswd.getText().toString();
 
-                Pattern p =  Pattern.compile("^[a-zA-Z0-9_-]+@buaa.edu.cn$");//复杂匹配
-                Matcher m = p.matcher(studentMail.toString());
-                //return m.matches();
+                if (user_name==null||user_name.equals("")){
+                    Toast.makeText(getApplicationContext(),
+                            "用户名不能为空！", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                if (passwd==null||passwd.equals("")){
+                    Toast.makeText(getApplicationContext(), "密码不能为空！", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                if (mail==null||mail.equals("")){
+                    Toast.makeText(getApplicationContext(), "邮箱不能为空！", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                if (user_name.length() > 20){
+                    Toast.makeText(getApplicationContext(), "用户名长度不能超过20位！", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                if (passwd.length() < 8){
+                    Toast.makeText(getApplicationContext(), "密码至少8位！", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                if (passwd.length() < 8){
+                    Toast.makeText(getApplicationContext(), "密码不能超过20位！", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+
+                p =  Pattern.compile("[a-zA-Z0-9_]+");//用户名
+                m = p.matcher(user_name);
+                if (!m.matches()){
+                    Toast.makeText(getApplicationContext(),
+                            "用户名格式错误！", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+                p =  Pattern.compile("^([A-Z]|[a-z]|[0-9]|[`~!@#$%^&*()+=|{}':;',\\\\\\\\[\\\\\\\\].<>/?~！@#￥%……&*（）――+|{}【】‘；：”“'。，、？]){8,20}$");//密码
+                m = p.matcher(passwd);
+                if (!m.matches()){
+                    Toast.makeText(getApplicationContext(),
+                            "密码格式错误！", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
 
 
 
+                p =  Pattern.compile("^[a-zA-Z0-9_-]+@buaa.edu.cn$");//复杂匹配
+                m = p.matcher(mail);
+                if (!m.matches()){
+                    Toast.makeText(getApplicationContext(),
+                            "请输入合法的北航邮箱！", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
 
                 RadioButton studentGender = findViewById(genderGroup.getCheckedRadioButtonId());
                 Request request = new Request.Builder()
@@ -64,23 +118,26 @@ public class RegisterActivity extends AppCompatActivity {
 
                 try {
                     Response response = client.newCall(request).execute();
-
                     byte[] bytes = response.body().bytes();
                     String responseString = new String(bytes);
                     JSONObject jo = new JSONObject(responseString);
                     String status = jo.getString("status");
                     Log.e(TAG, "jjkls"+status);
-                    if (response.code() == 200 && status == "success") {
+                    if (response.code() == 200 && status.equals("success")) {
                         Toast.makeText(getApplicationContext(),
                                 "注册成功", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "@@@@@@@@SUCCESS");
                         finish();
                     } else {
+                        Log.e(TAG, status+"IIIIIIII");
                         if (response.code() != 200)
                             Toast.makeText(getApplicationContext(),
                                     "注册失败", Toast.LENGTH_SHORT).show();
                         else if (status.equals("same"))
                             Toast.makeText(getApplicationContext(),
                                     "该用户已存在！请重新注册", Toast.LENGTH_SHORT).show();
+                        else Toast.makeText(getApplicationContext(),
+                                    "注册失败！", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

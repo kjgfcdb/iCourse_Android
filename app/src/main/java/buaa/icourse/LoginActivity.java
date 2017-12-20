@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -57,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         Button login = findViewById(R.id.login);
         Button register = findViewById(R.id.register);
-        TextView tongpaoLogin = findViewById(R.id.tongpao_login);
         //开启注册
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,61 +75,62 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String Sid = sid.getText().toString();
                 String Password = password.getText().toString();
-                Request request = new Request.Builder()
-                        .url(UploadFragment.uploadUrl)
-                        .post(new FormBody.Builder()
-                                .add("login", "1")
-                                .add("studentNo", Sid)
-                                .add("password_fill", Password)
-                                .build()
-                        ).build();
-                OkHttpClient client = new OkHttpClient();
 
-                try {
-                    String responseString = client.newCall(request).execute().body().string();
-                    System.out.println("@@" + responseString);
-                    JSONArray jsonArray = new JSONArray(responseString);
-                    JSONObject jo = jsonArray.getJSONObject(0);
-                    //new JSONObject(responseString);
-                    res = jo.getString("result");
-                    System.out.println("RES::::::" + res);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                if (Sid==null||Sid.equals("")){
+                    Toast.makeText(LoginActivity.this, "用户名不能为空！", Toast.LENGTH_SHORT).show();
+                }else
+                if (Password==null||Password.equals("")){
+                    Toast.makeText(LoginActivity.this, "密码不能为空！", Toast.LENGTH_SHORT).show();
+                }else {
+                    Request request = new Request.Builder()
+                            .url(UploadFragment.uploadUrl)
+                            .post(new FormBody.Builder()
+                                    .add("login", "1")
+                                    .add("studentNo", Sid)
+                                    .add("password_fill", Password)
+                                    .build()
+                            ).build();
+                    OkHttpClient client = new OkHttpClient();
 
-                if (res.equals("true")) {
-                    editor = pref.edit();
-                    if (checkBox.isChecked()) {
-                        editor.putBoolean("remember_password", true);
-                        editor.putString("sid", Sid);
-                        editor.putString("password", Password);
-                        editor.putBoolean("online", true);
-                    } else {
-                        editor.clear();
+                    try {
+                        String responseString = client.newCall(request).execute().body().string();
+                        System.out.println("@@" + responseString);
+                        JSONArray jsonArray = new JSONArray(responseString);
+                        JSONObject jo = jsonArray.getJSONObject(0);
+                        //new JSONObject(responseString);
+                        res = jo.getString("result");
+                        System.out.println("RES::::::" + res);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    editor.apply();
-                    //启动主活动
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    String information_fail = "Wrong password";
-                    if (res.equals("User Not Exist"))
-                        information_fail = "用户不存在！";
-                    else if (res.equals("Wrong password"))
-                        information_fail = "密码错误！";
-                    Toast.makeText(LoginActivity.this, information_fail, Toast.LENGTH_SHORT).show(); //"Wrong password
+
+                    if (res.equals("true")) {
+                        editor = pref.edit();
+                        if (checkBox.isChecked()) {
+                            editor.putBoolean("remember_password", true);
+                            editor.putString("sid", Sid);
+                            editor.putString("password", Password);
+                            editor.putBoolean("online", true);
+                        } else {
+                            editor.clear();
+                        }
+                        editor.apply();
+                        //启动主活动
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        String information_fail = "Wrong password";
+                        if (res.equals("User Not Exist"))
+                            information_fail = "用户不存在！";
+                        else if (res.equals("Wrong password"))
+                            information_fail = "密码错误！";
+                        Toast.makeText(LoginActivity.this, information_fail, Toast.LENGTH_SHORT).show(); //"Wrong password
+                    }
                 }
-            }
-        });
-        //启动同袍登录验证
-        tongpaoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,TongPaoLogin.class);
-                startActivity(intent);
             }
         });
     }
