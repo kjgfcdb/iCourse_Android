@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         Button login = findViewById(R.id.login);
         Button register = findViewById(R.id.register);
+        TextView tongpaoLogin = findViewById(R.id.tongpao_login);
         //开启注册
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,10 +77,8 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String Sid = sid.getText().toString();
                 String Password = password.getText().toString();
-
                 Request request = new Request.Builder()
                         .url(UploadFragment.uploadUrl)
                         .post(new FormBody.Builder()
@@ -124,6 +124,14 @@ public class LoginActivity extends AppCompatActivity {
                         information_fail = "密码错误！";
                     Toast.makeText(LoginActivity.this, information_fail, Toast.LENGTH_SHORT).show(); //"Wrong password
                 }
+            }
+        });
+        //启动同袍登录验证
+        tongpaoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,TongPaoLogin.class);
+                startActivity(intent);
             }
         });
     }

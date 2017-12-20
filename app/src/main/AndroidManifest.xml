@@ -34,6 +34,7 @@
         <activity android:name=".ResourceDetail" />
         <activity android:name=".CourseActivity" />
         <activity android:name=".CollegeDetail" />
+        <activity android:name=".TongPaoLogin"></activity>
     </application>
 
 </manifest>
