@@ -108,35 +108,5 @@
             android:textAllCaps="false" />
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="fill_parent" android:layout_height="fill_parent"
-        android:layout_weight="1">
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-
-        android:layout_marginBottom="0dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/tongpao_icon"
-            />
-
-       <TextView
-            android:id="@+id/tongpao_login"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="13"
-            android:gravity="center_vertical"
-            android:text="使用同袍账号登录"
-            android:textSize="18sp" />
-    </LinearLayout>
-
 </LinearLayout>
 
