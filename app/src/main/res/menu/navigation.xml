@@ -9,7 +9,7 @@
     <item
         android:id="@+id/category"
         android:icon="@drawable/category"
-        android:title="Category" />
+        android:title="Top" />
 
     <item
         android:id="@+id/search"
