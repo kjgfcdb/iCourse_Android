@@ -97,18 +97,11 @@ public class LoginActivity extends AppCompatActivity {
                     //new JSONObject(responseString);
                     res = jo.getString("result");
                     System.out.println("RES::::::" + res);
-//                    for (int i = 0; i < jsonArray.length(); i++) {
-//                        JSONObject object = jsonArray.getJSONObject(i);
-//                        resourceItemList.add(new ResourceItem(object.getString("resourceName"),
-//                                object.getString("resourceType")
-//                        ));
-//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-
-                if ((Sid.equals("14051131") && Password.equals("123456")) || (res.equals("true"))) {
+                if (res.equals("true")) {
                     editor = pref.edit();
                     if (checkBox.isChecked()) {
                         editor.putBoolean("remember_password", true);
@@ -124,7 +117,12 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
+                    String information_fail = "Wrong password";
+                    if (res.equals("User Not Exist"))
+                        information_fail = "用户不存在！";
+                    else if (res.equals("Wrong password"))
+                        information_fail = "密码错误！";
+                    Toast.makeText(LoginActivity.this, information_fail, Toast.LENGTH_SHORT).show(); //"Wrong password
                 }
             }
         });

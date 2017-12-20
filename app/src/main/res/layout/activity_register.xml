@@ -41,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:hint="字母/数字/符号的任意组合"
+                android:hint="字母/数字/下划线组成"
                  />
         </LinearLayout>
 
@@ -64,7 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:hint="密码长度不超过16位"
+                android:hint="密码长度必须在8-20位"
                 android:inputType="textPassword" />
         </LinearLayout>
 
@@ -87,6 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:hint="请输入北航邮箱"
                 android:inputType="textEmailAddress" />
         </LinearLayout>
 
