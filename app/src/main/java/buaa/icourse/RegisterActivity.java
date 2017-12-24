@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                 m = p.matcher(user_name);
                 if (!m.matches()){
                     Toast.makeText(getApplicationContext(),
-                            "用户名格式错误！", Toast.LENGTH_SHORT).show();
+                            "用户名格式错误！\n请用字母/数字/下划线来注册！", Toast.LENGTH_SHORT).show();
                     return ;
                 }
 
@@ -90,9 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return ;
                 }
 
-
-
-                p =  Pattern.compile("^[a-zA-Z0-9_-]+@buaa.edu.cn$");//复杂匹配
+                p =  Pattern.compile("^[a-zA-Z0-9_-]+@.*buaa\\.edu\\.cn$");//复杂匹配
                 m = p.matcher(mail);
                 if (!m.matches()){
                     Toast.makeText(getApplicationContext(),
