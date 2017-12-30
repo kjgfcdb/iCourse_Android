@@ -120,6 +120,7 @@ public class UserFragment extends Fragment {
     }
 
     public void fillUserInfo() {
+        System.out.println("~~~~~~~~~:::::"+pref.getString("sid", "$$$"));
         Request request = new Request.Builder()
                 .url(UploadFragment.uploadUrl)
                 .post(new FormBody.Builder()

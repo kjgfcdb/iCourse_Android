@@ -44,6 +44,8 @@
             android:hint="@string/please_input_your_id" />
     </LinearLayout>
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -107,6 +109,44 @@
             android:text="@string/login"
             android:textAllCaps="false" />
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent" android:layout_height="fill_parent"
+        android:layout_weight="1">
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="6dp"
+            android:src="@drawable/tongpao_icon"
+            />
+
+        <TextView
+            android:id="@+id/tongpao_login"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="13"
+            android:gravity="center_vertical"
+            android:text="使用同袍账号登录"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <!--<WebView android:id="@+id/Toweb"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
 
 </LinearLayout>
 

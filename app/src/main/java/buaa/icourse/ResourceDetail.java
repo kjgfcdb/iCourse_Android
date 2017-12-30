@@ -2,13 +2,17 @@ package buaa.icourse;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -19,10 +23,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +39,52 @@ import okhttp3.Request;
 
 
 public class ResourceDetail extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
+    public static final String TAG = "ResourceDetail";
+
+//    ProgressBar pb;
+//    TextView tv;
+//    int   fileSize;
+//    int   downLoadFileSize;
+//    String fileEx,fileNa,filename;
+//    private Handler handler = new Handler()
+//    {
+//        @Override
+//        public void handleMessage(Message msg)
+//        {//定义一个Handler，用于处理下载线程与UI间通讯
+//            if (!Thread.currentThread().isInterrupted())
+//            {
+//                switch (msg.what)
+//                {
+//                    case 0:
+//                        pb.setMax(fileSize);
+//                    case 1:
+//                        pb.setProgress(downLoadFileSize);
+//                        int result = downLoadFileSize * 100 / fileSize;
+//                        tv.setText(result + "%");
+//                        break;
+//                    case 2:
+//                        Toast.makeText(getApplicationContext(), "文件下载完成", 1).show();
+//                        break;
+//
+//                    case -1:
+//                        String error = msg.getData().getString("error");
+//                        Toast.makeText(getApplicationContext(), error, 1).show();
+//                        break;
+//                }
+//            }
+//            super.handleMessage(msg);
+//        }
+//    };
+//
+//    private void sendMsg(int flag)
+//    {
+//        Message msg = new Message();
+//        msg.what = flag;
+//        handler.sendMessage(msg);
+//    }
+
     /**
      * 详情展示页,用于展示资源的详细信息
      */
@@ -51,7 +103,7 @@ public class ResourceDetail extends AppCompatActivity {
         setContentView(R.layout.resource_detail);
         Intent intent = getIntent();
         //获取资源名以及资源类型
-        String resourceName = intent.getStringExtra(RESOURCE_NAME);
+        final String resourceName = intent.getStringExtra(RESOURCE_NAME);
         String resourceType = intent.getStringExtra(RESOURCE_TYPE);
         String resourceInfo = intent.getStringExtra(RESOURCE_INFO);
         String resourceUploader = intent.getStringExtra(RESOURCE_UPLOADER);
@@ -97,11 +149,10 @@ public class ResourceDetail extends AppCompatActivity {
         downloadFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doDownloadFile(resourceUrl);
+                doDownloadFile(resourceUrl, resourceName);
             }
         });
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -132,7 +183,7 @@ public class ResourceDetail extends AppCompatActivity {
 
     }
 
-    public void doDownloadFile(String url) {
+    public void doDownloadFile(String url, String resourceName) {
         // 调用系统自带下载器下载文件
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -149,7 +200,9 @@ public class ResourceDetail extends AppCompatActivity {
             DownloadManager downloadManager = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
             try {
                 assert downloadManager != null;
-                downloadManager.enqueue(request);
+                long Id = downloadManager.enqueue(request);
+                listener(Id, resourceName);
+
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Failed to download",
                         Toast.LENGTH_SHORT).show();
@@ -170,7 +223,10 @@ public class ResourceDetail extends AppCompatActivity {
                 DownloadManager downloadManager = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
                 try {
                     assert downloadManager != null;
-                    downloadManager.enqueue(request);
+                    long Id = downloadManager.enqueue(request);
+
+                    //listener(Id);
+
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Failed to download",
                             Toast.LENGTH_SHORT).show();
@@ -178,4 +234,22 @@ public class ResourceDetail extends AppCompatActivity {
             }
         }
     }
+
+    private void listener(final long Id, final String resourceName) {
+        // 注册广播监听系统的下载完成事件。
+        IntentFilter intentFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                long ID = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+                Log.e(TAG, "!!!"+ID);
+                if (ID == Id) {
+                    Toast.makeText(getApplicationContext(), "任务:" + resourceName + " 下载完成!", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        registerReceiver(broadcastReceiver, intentFilter);
+    }
+
 }

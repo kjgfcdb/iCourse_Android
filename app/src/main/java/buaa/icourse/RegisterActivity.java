@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return ;
                 }
 
-                p =  Pattern.compile("^[a-zA-Z0-9_-]+@.*buaa\\.edu\\.cn$");//复杂匹配
+                p =  Pattern.compile("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$");//"^[a-zA-Z0-9_-]+@.*buaa\\.edu\\.cn$");//复杂匹配
                 m = p.matcher(mail);
                 if (!m.matches()){
                     Toast.makeText(getApplicationContext(),
