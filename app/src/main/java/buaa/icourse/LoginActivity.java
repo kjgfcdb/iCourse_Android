@@ -21,6 +21,8 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -132,9 +134,15 @@ public class LoginActivity extends AppCompatActivity {
                                     .add("password_fill", Password)
                                     .build()
                             ).build();
-                    OkHttpClient client = new OkHttpClient();
+                    //OkHttpClient client = new OkHttpClient();
 
                     try {
+                        OkHttpClient client = new OkHttpClient.Builder().
+                                connectTimeout(3, TimeUnit.SECONDS) //连接超时
+                                .readTimeout(4, TimeUnit.SECONDS) //读取超时
+                                .writeTimeout(5, TimeUnit.SECONDS) //写超时
+                                .build();
+
                         String responseString = client.newCall(request).execute().body().string();
                         System.out.println("@@" + responseString);
                         JSONArray jsonArray = new JSONArray(responseString);
@@ -144,6 +152,9 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("RES::::::" + res);
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Toast.makeText(getApplicationContext(),
+                                "登录失败!请检查网络环境是否为校园网!", Toast.LENGTH_SHORT).show();
+                        return ;
                     }
 
                     if (res.equals("true")) {
@@ -155,6 +166,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putBoolean("online", true);
                         } else {
                             editor.clear();
+                            editor.putString("sid", Sid);
                         }
                         editor.apply();
                         //启动主活动

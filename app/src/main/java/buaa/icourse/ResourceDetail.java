@@ -94,6 +94,7 @@ public class ResourceDetail extends AppCompatActivity {
     public static final String RESOURCE_UPLOADER = "resource_uploader";
     public static final String RESOURCE_DOWNLOAD_COUNT = "resource_download_count";
     public static final String RESOURCE_URL = "resource_url";
+    public static final String RESOURCE_EVALUATION = "evaluation";
     private String m_url;
 
 
@@ -109,6 +110,7 @@ public class ResourceDetail extends AppCompatActivity {
         String resourceUploader = intent.getStringExtra(RESOURCE_UPLOADER);
         final String resourceUrl = intent.getStringExtra(RESOURCE_URL);
         int resourceDownloadCount = intent.getIntExtra(RESOURCE_DOWNLOAD_COUNT, 0);
+        double rating = intent.getDoubleExtra(RESOURCE_EVALUATION, 0);
         //获取工具栏
         Toolbar toolbar = findViewById(R.id.resource_detail_toolbar);
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
@@ -116,6 +118,8 @@ public class ResourceDetail extends AppCompatActivity {
         TextView resourceDetailText = findViewById(R.id.resource_detail_text);
         TextView resourceUploaderView = findViewById(R.id.resource_detail_uploader_name);
         TextView resourceDownloadView = findViewById(R.id.resource_down_count);
+
+        Button button_evaluation = findViewById(R.id.resource_detail_uploadRating);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -136,13 +140,39 @@ public class ResourceDetail extends AppCompatActivity {
 
         //上传评分
         final RatingBar starRating = findViewById(R.id.resource_detail_rating);
-        Button uploadRating = findViewById(R.id.resource_detail_uploadRating);
-        uploadRating.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doUploadRating(starRating.getRating());
-            }
-        });
+//        Button uploadRating = findViewById(R.id.resource_detail_uploadRating);
+//        uploadRating.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                doUploadRating(starRating.getRating());
+//            }
+//        });
+        String tt = ""+rating;
+        Log.e("EVALUTAITON",tt);
+        if (rating != -1){ //代表有用戶评价过了
+            button_evaluation.setText("该资源评分");
+            starRating.setRating((float)rating);
+        }else { //否则用户就可以自己评分
+            Button uploadRating = findViewById(R.id.resource_detail_uploadRating);
+            uploadRating.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    doUploadRating(starRating.getRating());
+                }
+            });
+        }
+
+//        RatingBar ratingBar = findViewById(R.id.resource_detail_rating);
+//        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//                float rat = 1.5f;
+//                Log.e("------------","当前的评价等级："rating);
+//                //ratingBar.setRating(rat);
+//            }
+//        });
+
+
 
         //下载文件
         Button downloadFile = findViewById(R.id.resource_detail_download);
@@ -174,13 +204,15 @@ public class ResourceDetail extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         try {
             client.newCall(request).execute();
+
+            //!!!!TOBEDONE
+
             Toast.makeText(getApplicationContext(), "感谢你的评价！",
                     Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "网络异常，请稍后再试。",
                     Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void doDownloadFile(String url, String resourceName) {

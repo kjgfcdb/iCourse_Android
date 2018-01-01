@@ -130,8 +130,9 @@ public class CourseActivity extends AppCompatActivity {
                 String intro = unicodeToString(object.getString("intro"));
                 String username = unicodeToString(object.getString("username"));
                 int downloadCount = object.getInt("downloadCount");
+                double evaluation = object.getDouble("evaluation");
                 ResourceItem ri = new ResourceItem(name, resourceType, url,
-                        intro, username, downloadCount
+                        intro, username, downloadCount, evaluation
                 );
                 localResourceItemQueue.add(ri);
             }

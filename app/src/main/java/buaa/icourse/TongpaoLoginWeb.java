@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.transform.Result;
 
@@ -146,6 +147,8 @@ public class TongpaoLoginWeb extends AppCompatActivity {
         browser.getSettings().setSupportZoom(true);
         browser.getSettings().setBuiltInZoomControls(true);
 
+
+
         // 如果页面中链接，如果希望点击链接继续在当前browser中响应，
         // 而不是新开Android的系统browser中响应该链接，必须覆盖webview的WebViewClient对象
         browser.setWebViewClient(new WebViewClient() {
@@ -154,6 +157,19 @@ public class TongpaoLoginWeb extends AppCompatActivity {
                 view.loadUrl(url);//"https://www.baidu.com");
                 System.out.println("URLLLLLL:" + url);
                 return true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                // 断网或者网络连接超时
+                if (errorCode == ERROR_HOST_LOOKUP || errorCode == ERROR_CONNECT || errorCode == ERROR_TIMEOUT) {
+                    //view.loadUrl("about:blank"); // 避免出现默认的错误界面
+                    //view.loadUrl(mErrorUrl);
+                    Toast.makeText(getApplicationContext(),
+                            "同袍登录失败！请检查网络环境是否为校园网！", Toast.LENGTH_SHORT).show();
+                    //e.printStackTrace();
+                }
             }
 
 
@@ -206,7 +222,13 @@ public class TongpaoLoginWeb extends AppCompatActivity {
         System.out.println("!!!!POST_AFTER");
         try {
             //Thread.sleep(3000);
-            OkHttpClient client = new OkHttpClient();
+
+            //OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder().
+                    connectTimeout(3, TimeUnit.SECONDS) //连接超时
+                    .readTimeout(4, TimeUnit.SECONDS) //读取超时
+                    .writeTimeout(5, TimeUnit.SECONDS) //写超时
+                    .build();
             Request request = new Request.Builder()
                     .url(UploadFragment.uploadUrl)
                     .post(new FormBody.Builder()
@@ -260,6 +282,8 @@ public class TongpaoLoginWeb extends AppCompatActivity {
             }
 
         }catch (Exception e){
+            Toast.makeText(getApplicationContext(),
+                    "同袍登录失败！请检查网络环境是否为校园网！", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
         return false;

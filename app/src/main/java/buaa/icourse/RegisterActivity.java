@@ -1,5 +1,6 @@
 package buaa.icourse;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +11,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -112,10 +116,17 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.e(TAG, studentGender.getText().toString());
 
                 //Toast.makeText(getApplicationContext(), studentGender.getText(), Toast.LENGTH_SHORT).show();
-                OkHttpClient client = new OkHttpClient();
 
                 try {
+
+                    OkHttpClient client = new OkHttpClient.Builder().
+                            connectTimeout(3, TimeUnit.SECONDS) //连接超时
+                            .readTimeout(4, TimeUnit.SECONDS) //读取超时
+                            .writeTimeout(5, TimeUnit.SECONDS) //写超时
+                            .build();
+
                     Response response = client.newCall(request).execute();
+
                     byte[] bytes = response.body().bytes();
                     String responseString = new String(bytes);
                     JSONObject jo = new JSONObject(responseString);
@@ -127,20 +138,28 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.e(TAG, "@@@@@@@@SUCCESS");
                         finish();
                     } else {
+                        //AsyncTask(RegisterActivity.this).execute().get(2000, TimeUnit.MILLISECONDS);
                         Log.e(TAG, status+"IIIIIIII");
                         if (response.code() != 200)
                             Toast.makeText(getApplicationContext(),
-                                    "注册失败", Toast.LENGTH_SHORT).show();
+                                    "注册失败!!", Toast.LENGTH_SHORT).show();
                         else if (status.equals("same"))
                             Toast.makeText(getApplicationContext(),
                                     "该用户已存在！请重新注册", Toast.LENGTH_SHORT).show();
                         else Toast.makeText(getApplicationContext(),
                                     "注册失败！", Toast.LENGTH_SHORT).show();
                     }
-                } catch (Exception e) {
+                }catch (ConnectTimeoutException e) {
+                    //此处用来处理用户超时后的操作，例如：跳转界面，弹出提示框。
+                    //备注：此处不能直接进行界面操作，否则回报ANR异常。如果相处理界面操作，则和handler进行结合
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),
-                            "注册失败", Toast.LENGTH_SHORT).show();
+                            "注册失败!请检查网络环境是否为校园网", Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),
+                            "注册失败!请检查网络环境是否为校园网!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

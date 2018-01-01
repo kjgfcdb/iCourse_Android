@@ -138,7 +138,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="13"
             android:gravity="center_vertical"
-            android:text="使用同袍账号登录"
+            android:text="使用同袍账号登录(需校园网)"
             android:textSize="20sp" />
 
     </LinearLayout>
