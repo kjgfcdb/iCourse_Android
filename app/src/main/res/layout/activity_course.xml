@@ -28,13 +28,19 @@
         android:layout_weight="1"
         android:layout_height="0dp">
         <Button
+            android:id="@+id/course_upload"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:text="上传资源"
+            />
         <Button
+            android:id="@+id/course_collect"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:text="收藏该课程"
+            />
 
     </LinearLayout>
 </LinearLayout>

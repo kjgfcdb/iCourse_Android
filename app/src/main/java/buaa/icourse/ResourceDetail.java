@@ -42,49 +42,6 @@ public class ResourceDetail extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
     public static final String TAG = "ResourceDetail";
-
-//    ProgressBar pb;
-//    TextView tv;
-//    int   fileSize;
-//    int   downLoadFileSize;
-//    String fileEx,fileNa,filename;
-//    private Handler handler = new Handler()
-//    {
-//        @Override
-//        public void handleMessage(Message msg)
-//        {//定义一个Handler，用于处理下载线程与UI间通讯
-//            if (!Thread.currentThread().isInterrupted())
-//            {
-//                switch (msg.what)
-//                {
-//                    case 0:
-//                        pb.setMax(fileSize);
-//                    case 1:
-//                        pb.setProgress(downLoadFileSize);
-//                        int result = downLoadFileSize * 100 / fileSize;
-//                        tv.setText(result + "%");
-//                        break;
-//                    case 2:
-//                        Toast.makeText(getApplicationContext(), "文件下载完成", 1).show();
-//                        break;
-//
-//                    case -1:
-//                        String error = msg.getData().getString("error");
-//                        Toast.makeText(getApplicationContext(), error, 1).show();
-//                        break;
-//                }
-//            }
-//            super.handleMessage(msg);
-//        }
-//    };
-//
-//    private void sendMsg(int flag)
-//    {
-//        Message msg = new Message();
-//        msg.what = flag;
-//        handler.sendMessage(msg);
-//    }
-
     /**
      * 详情展示页,用于展示资源的详细信息
      */
@@ -96,8 +53,6 @@ public class ResourceDetail extends AppCompatActivity {
     public static final String RESOURCE_URL = "resource_url";
     public static final String RESOURCE_EVALUATION = "evaluation";
     private String m_url;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

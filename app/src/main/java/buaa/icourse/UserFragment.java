@@ -33,7 +33,7 @@ public class UserFragment extends Fragment {
     private TextView user_email;
     private TextView user_credit;
 
-    HashMap mp_college = new HashMap(){
+    public static HashMap mp_college = new HashMap(){
         {
             put(  1, "材料科学与工程学院");
             put(  2, "电子信息工程学院");
@@ -64,6 +64,15 @@ public class UserFragment extends Fragment {
             put(  27, "化学与环境学院");
             put(  28, "思想政治理论学院");
             put(  29, "人文与社会科学高等研究");
+            put(  30, "空间与环境学院");
+            put(  35, "国际通用工程学院");
+            put(  37, "北航学院");
+            put(  73, "士谔书院");
+            put(  74,  "冯如书院");
+            put(  75,  "士嘉书院");
+            put(  76,  "守锷书院");
+            put(  77,  "致真书院");
+            put(  79,  "知行书院");
         }
     };
 

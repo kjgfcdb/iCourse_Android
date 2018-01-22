@@ -261,6 +261,7 @@ public class TongpaoLoginWeb extends AppCompatActivity {
                     editor.putString("sid", username);
                     editor.putString("password", "");
                     editor.putBoolean("online", true);
+                    editor.putBoolean("isTongpao", true);
                 }
                 //else {
                 //    editor.clear();

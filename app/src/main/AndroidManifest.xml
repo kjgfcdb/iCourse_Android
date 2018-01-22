@@ -35,7 +35,7 @@
         <activity android:name=".CourseActivity" />
         <activity android:name=".CollegeDetail" />
         <activity android:name=".TongpaoLoginWeb" />
-        <activity android:name=".TongPaoLogin"></activity>
+        <activity android:name=".UploadActivity"></activity>
     </application>
 
 </manifest>

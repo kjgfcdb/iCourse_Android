@@ -80,19 +80,6 @@ public class SearchFragment extends Fragment {
                     for (int i = 0; i < min(10, ja.length()); ++i) {
                         JSONObject courseData = ja.getJSONObject(i);
                         score = courseData.getDouble("score");
-                        //if (score < 5)
-                        //    continue;
-                        /*
-                        name = (String)courseData.get("name");
-                        System.out.println("%%%"+name);
-                        college_id = courseData.getInt("college_id");
-                        course_code = (String)courseData.get("course_code");
-                        String course_teacher = courseData.getString("course_teacher");
-                        String course_credit = courseData.getString("course_credit");
-                        String course_type = courseData.getString("course_type");
-                        System.out.println("???"+course_code);
-                        ri = new CourseItem(name, course_code, college_id,course_teacher,course_credit,course_type);
-                        */
                         course_teacher = course_credit = course_type = "";
                         name = (String) courseData.get("name");
                         college_id = courseData.getInt("college_id");

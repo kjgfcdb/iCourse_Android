@@ -60,7 +60,7 @@ public class CollegeDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course2);
+        setContentView(R.layout.activity_college);
         collegeId = getIntent().getIntExtra(COLLEGE_ID,6);
         initCourses();
         RecyclerView recyclerView = findViewById(R.id.home_recycler_view2);

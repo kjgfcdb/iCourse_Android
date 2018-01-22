@@ -26,14 +26,10 @@ import java.util.Random;
 
 import static java.lang.Math.min;
 
-
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
     private Context mContext;
     private List<CourseItem> mCourseList;
     public static final String TAG = "CourseAAAAdapter";
-
-    //private ResourceAdapter adapter;
-    //private List<ResourceItem> resourceItemList = new ArrayList<>();
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout layout;
@@ -62,30 +58,28 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final String courseName, courseCode = "";
-
         if (mContext == null) {
             mContext = parent.getContext();
         }
         final View view = LayoutInflater.from(mContext).inflate(R.layout.course_item,
                 parent, false);
-
         final ViewHolder holder = new ViewHolder(view);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 int position = holder.getAdapterPosition();
                 CourseItem item = mCourseList.get(position);
-
                 String courseName = item.getCourseName();
                 int courseType = item.getCollegeId();
+                int collegeId = item.getCollegeId();
                 String courseCode = item.getCourseCode();
-
-                Log.d(TAG, "!!!!!Query: " + courseName + "^^^^^^" + courseType + "*******" + courseCode);
-
 
                 Intent intent = new Intent(mContext, CourseActivity.class);
                 intent.putExtra("Course_code", courseCode);
+                intent.putExtra("Course_name", courseName);
+                String courseCollege = (String)UserFragment.mp_college.get(collegeId);
+                intent.putExtra("Course_college", courseCollege);
+
                 mContext.startActivity(intent);
             }
         });
@@ -97,12 +91,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         CourseItem courseItem = mCourseList.get(position);
         holder.courseName.setText(courseItem.getCourseName());
         try{
-            //Log.e(TAG, "UUUUYYYUUUIII"+Integer.toString(courseItem.getCollegeId()));
             if (courseItem != null)
                 holder.courseImage.setImageResource((int) MainActivity.collegePics.get(courseItem.getCollegeId()));
         } catch (Exception e) {
             holder.courseImage.setImageResource((int) MainActivity.collegePics.get(0));
-            //e.printStackTrace();
         }
         holder.courseTeacherName.setText(courseItem.getTeacherName());
         holder.courseCredit.setText(courseItem.getCredit());
