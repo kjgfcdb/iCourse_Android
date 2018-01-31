@@ -40,6 +40,7 @@ import okhttp3.Request;
 
 public class ResourceDetail extends AppCompatActivity {
 
+    boolean flag=false;
     private BroadcastReceiver broadcastReceiver;
     public static final String TAG = "ResourceDetail";
     /**
@@ -235,8 +236,15 @@ public class ResourceDetail extends AppCompatActivity {
                 }
             }
         };
-
+        flag=true;
         registerReceiver(broadcastReceiver, intentFilter);
     }
-
+    @Override
+    public void onPause() {
+        if(flag){
+            flag=false;
+            unregisterReceiver(broadcastReceiver);
+        }
+        super.onPause();
+    }
 }

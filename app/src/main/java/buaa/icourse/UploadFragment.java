@@ -42,7 +42,7 @@ import okhttp3.Response;
 public class UploadFragment extends Fragment {
     //static String uploadUrl = "http://39.106.60.94:8080/Hello/HelloWorld";
     static String uploadUrl1 = "http://39.106.60.94:8080/Hello/HelloWorld";
-    static String uploadUrl = "http://10.2.28.124:8080/Hello/HelloWorld";// "http://10.2.28.124:8080/dir/2017/12/";
+    static String uploadUrl = "http://60.205.211.127:8080/androidServer/HelloWorld";// "http://60.205.211.127:8080/dir/2017/12/";
     private static final int SUCCESS = 2;//状态识别码
     private static final int FAILD = 3;
     private TextView fileNameTextView; // 文件名
