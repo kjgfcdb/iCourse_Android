@@ -12,8 +12,6 @@ import android.widget.Button;
 
 
 public class CourseActivity extends AppCompatActivity {
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     public static final String TAG = "CourseActivity";
 
     @Override
@@ -21,8 +19,8 @@ public class CourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
 
-        tabLayout = findViewById(R.id.course_tab);
-        viewPager = findViewById(R.id.course_viewPager);
+        TabLayout tabLayout = findViewById(R.id.course_tab);
+        ViewPager viewPager = findViewById(R.id.course_viewPager);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),new String[]{"课程介绍","资源列表","讨论区"});
         adapter.addFragment(new course_intro_fragment());

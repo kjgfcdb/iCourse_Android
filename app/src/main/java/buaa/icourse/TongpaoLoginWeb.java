@@ -10,36 +10,16 @@ import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
-//import org.apache.http.HttpResponse;
-//import org.apache.http.NameValuePair;
-//import org.apache.http.client.HttpClient;
-//import org.apache.http.client.entity.UrlEncodedFormEntity;
-//import org.apache.http.client.methods.HttpPost;
-//import org.apache.http.client.utils.HttpClientUtils;
-//import org.apache.http.impl.client.CloseableHttpClient;
-//import org.apache.http.impl.client.DefaultHttpClient;
-//import org.apache.http.impl.client.HttpClients;
-//
-//
-//import org.apache.http.message.BasicNameValuePair;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import javax.xml.transform.Result;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -54,21 +34,13 @@ import okhttp3.Response;
 
 public class TongpaoLoginWeb extends AppCompatActivity {
     public static final String TAG = "ResourceDetail";
-    private CheckBox checkBox;
     private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
     public String tp_login_time;
-    public static final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //checkBox = findViewById(R.id.checkBox);
-
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tongpao_web);
-
         //WebView
         WebView browser=(WebView)findViewById(R.id.Toweb2);
 
@@ -103,20 +75,10 @@ public class TongpaoLoginWeb extends AppCompatActivity {
                     .url(url)
                     .addHeader("Tongpao-Auth-appid", "c643da987bdc3ec74efbb0ef7927f7ea")
                     .addHeader("Tongpao-Auth-secret", "GNcP_Pa0Z3nFjjsQa8sd8VCUmUEiIZBa6Rue682LDsMyUIx7iwPplQ")
-                    .post(body).build();
-//                    .post(new FormBody.Builder()
-//                            .add("redirect", "http://www.baidu.com/")
-//                            .add("need_email", "1")
-//                            .add("need_email", "1")
-//                            .add("need_personal", "1")
-//                            .add("need_school_info", "1")
-//                            .add("need_identification", "1")
-//                            .build()
-            // ).build();
+                    .post(body)
+                    .build();
             System.out.println("@@@@@@@@@#@$!#$!@#!@#"+request.toString());
             Response response = client.newCall(request).execute();
-
-
 
             byte[] bytes = response.body().bytes();
             String responseString = new String(bytes);
@@ -142,11 +104,9 @@ public class TongpaoLoginWeb extends AppCompatActivity {
              browser.loadUrl("http://www.baidu.com");
 
 
-
         //设置可自由缩放网页
         browser.getSettings().setSupportZoom(true);
         browser.getSettings().setBuiltInZoomControls(true);
-
 
 
         // 如果页面中链接，如果希望点击链接继续在当前browser中响应，
@@ -254,7 +214,7 @@ public class TongpaoLoginWeb extends AppCompatActivity {
                 return false;
             if (res.equals("true")) {
                 System.out.println("UUUUUUU::"+username);
-                editor = pref.edit();
+                SharedPreferences.Editor editor = pref.edit();
                 //if (checkBox.isChecked())
                 {
                     editor.putBoolean("remember_password", false);
