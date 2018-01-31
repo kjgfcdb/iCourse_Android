@@ -76,23 +76,19 @@ public class TongpaoLoginWeb extends AppCompatActivity {
         String token = "";
         try {
             OkHttpClient client = new OkHttpClient();
-
             Date now = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式
-
             final double d = Math.random();
             final int ran = (int)(d*1000000);
             int now_ms = (int)System.currentTimeMillis() % 1000000;
             now_ms = (now_ms + ran) % 1000000;
             now_ms = (now_ms + 1000000) % 1000000;
-
             tp_login_time = dateFormat.format( now );
             tp_login_time = tp_login_time+"."+now_ms;//".000000";
             System.out.println("NOWNOW::::"+tp_login_time);
-
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             JSONObject post_para = new JSONObject();
-            post_para.put("redirect", "http://10.2.28.124:8080/Hello/HelloWorld"); //UploadFragment.uploadUrl); //直接post到服务器//"http://www.baidu.com/");
+            post_para.put("redirect", "http://60.205.211.127:8080/androidServer/HelloWorld"); //UploadFragment.uploadUrl); //直接post到服务器//"http://www.baidu.com/");
             post_para.put("need_email", "1");
             post_para.put("need_school_info", "1");
             post_para.put("need_personal", "1");
