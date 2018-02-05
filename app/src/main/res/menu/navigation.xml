@@ -16,9 +16,9 @@
         android:icon="@drawable/search"
         android:title="Search" />
     <item
-        android:id="@+id/upload"
-        android:icon="@drawable/upload"
-        android:title="Upload" />
+        android:id="@+id/collection"
+        android:icon="@drawable/collection"
+        android:title="Collection" />
     <item
         android:id="@+id/user"
         android:icon="@drawable/person"

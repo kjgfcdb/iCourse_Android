@@ -3,7 +3,6 @@ package buaa.icourse;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.annotation.AnimatorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.search:
                     viewPager.setCurrentItem(2);
                     return true;
-                case R.id.upload:
+                case R.id.collection:
                     viewPager.setCurrentItem(3);
                     return true;
                 case R.id.user:
@@ -140,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(CategoryFragment.newInstance());
         adapter.addFragment(HomeFragment.newInstance());
         adapter.addFragment(SearchFragment.newInstance());
-        adapter.addFragment(UploadFragment.newInstance());
+        adapter.addFragment(CollectionFragment.newInstance());
         adapter.addFragment(UserFragment.newInstance());
         viewPager.setAdapter(adapter);
     }
