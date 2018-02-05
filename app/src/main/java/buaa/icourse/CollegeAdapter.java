@@ -20,8 +20,6 @@ import java.util.Map;
 import java.util.Random;
 
 import static buaa.icourse.CourseAdapter.TAG;
-
-
 public class CollegeAdapter extends RecyclerView.Adapter<CollegeAdapter.ViewHolder> {
     private Context mContext;
     private List<CollegeItem> mCollegeList;

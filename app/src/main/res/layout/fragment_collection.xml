@@ -17,7 +17,7 @@
                 android:id="@+id/no_resource"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="该课程尚无资源，你来上传一个吧 =￣ω￣="
+                android:text="还没有收藏的课程\n找到你想关注的课程进行收藏吧 =￣ω￣="
                 android:textSize="35sp"
                 android:visibility="gone"
                 />

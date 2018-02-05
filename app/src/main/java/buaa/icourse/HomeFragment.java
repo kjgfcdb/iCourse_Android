@@ -138,12 +138,16 @@ public class HomeFragment extends Fragment {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String h = ""+object.getDouble("evaluation");
                 Log.d("EVA == ",Double.toString(object.getDouble("evaluation")));
+                String intro = object.getString("intro");
+                if (intro.equals("")) {
+                    intro = "该资源尚无简介";
+                }
                 localResourceItemQueue.add(new ResourceItem(
-                        unicodeToString(object.getString("resourceName")),
+                        object.getString("resourceName"),//unicodeToString(object.getString("resourceName")),
                         object.getString("resourceType"),
                         object.getString("url"),
-                        unicodeToString(object.getString("intro")),
-                        unicodeToString(object.getString("username")),
+                        intro,//object.getString("intro"),//unicodeToString(object.getString("intro")),
+                        object.getString("username"),//unicodeToString(object.getString("username")),
                         object.getInt("downloadCount"),
                         object.getDouble("evaluation")
                 ));

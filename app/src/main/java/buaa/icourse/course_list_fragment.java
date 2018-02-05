@@ -78,11 +78,14 @@ public class course_list_fragment extends Fragment {
             int siz = jsonArray.length();
             for (int i = 0; i < siz; i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                String resourceType = unicodeToString(object.getString("resourceType"));
+                String resourceType = object.getString("resourceType");//unicodeToString(object.getString("resourceType"));
                 String url = object.getString("url");
-                String name = unicodeToString(object.getString("resourceName"));
-                String intro = unicodeToString(object.getString("intro"));
-                String username = unicodeToString(object.getString("username"));
+                String name = object.getString("resourceName");//unicodeToString(object.getString("resourceName"));
+                String intro = object.getString("intro");//unicodeToString(object.getString("intro"));
+                if (intro.equals("")) {
+                    intro = "该资源尚无简介";
+                }
+                String username = object.getString("username");//unicodeToString(object.getString("username"));
                 int downloadCount = object.getInt("downloadCount");
                 double evaluation = object.getDouble("evaluation");
                 ResourceItem ri = new ResourceItem(name, resourceType, url,
